@@ -3,32 +3,37 @@ using TMPro;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using System.Collections;
 
 public class ItemInteractable : MonoBehaviour
 {
     [Header("Item Requirements")]
     [SerializeField] private bool requiresItem = false;
     [SerializeField] private string requiredItemName;
+    [SerializeField] private bool isSingleUse = true;
 
     [Header("UI")]
     [SerializeField] private Button interactButton;
-    [SerializeField] private TextMeshProUGUI interactionPrompt;
-    [SerializeField] private string defaultPromptMessage = "Press E to interact";
-    [SerializeField] private string itemPromptMessage = "Press E to use {0}";
+    public TextMeshProUGUI interactionPrompt;
+    public string defaultPromptMessage = "Press E to interact";
+    public string itemPromptMessage = "Press E to use {0}";
     
     [Header("Dialogue")]
     [SerializeField] private ItemInteractableDialogue dialogueSettings;
+    [SerializeField] private float reinteractDelay = 0.5f;
     
     public UnityEvent onInteractionTriggered;
     
     private bool canInteract = false;
     private bool hasBeenUsed = false;
     private DialogueManager dialogueManager;
-    private bool isInDialogue = false;
+    public bool isInDialogue = false;
     private InputAction interactAction;
+    private bool cooldownActive = false;
 
-    void Awake()
+    void Start()
     {
+        canInteract = false;
         interactAction = InputSystem.actions.FindAction("Interact");
         dialogueManager = FindObjectOfType<DialogueManager>();
         if (interactionPrompt != null)
@@ -37,40 +42,13 @@ public class ItemInteractable : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        // Check if dialogue state has changed
-        bool currentDialogueState = dialogueManager.IsDialogueActive();
-        bool isDialogueActive = dialogueManager != null && dialogueManager.IsDialogueActive();
-        if (isInDialogue != currentDialogueState)
-        {
-            isInDialogue = currentDialogueState;
-            UpdatePromptVisibility();
-        }
-        if (interactAction.WasPressedThisFrame())
-        {
-            if (canInteract && !isInDialogue && !isDialogueActive)
-            {
-                TriggerInteraction();
-            }
-        }
-    }
-
-    void UpdatePromptVisibility()
-    {
-        if (interactionPrompt != null && canInteract && !hasBeenUsed)
-        {
-            interactionPrompt.gameObject.SetActive(!isInDialogue);
-        }
-    }
-
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && !hasBeenUsed)
+        if (other.CompareTag("Player") && (!hasBeenUsed || !isSingleUse))
         {
             canInteract = true;
             
-            if (interactionPrompt != null && !isInDialogue)
+            if (interactionPrompt != null && !isInDialogue && !cooldownActive)
             {
                 if (requiresItem && !InventoryManager.Instance.HasItem(requiredItemName))
                 {
@@ -85,6 +63,7 @@ public class ItemInteractable : MonoBehaviour
                     interactionPrompt.text = defaultPromptMessage;
                 }
                 interactionPrompt.gameObject.SetActive(true);
+                interactButton.enabled = true;
             }
         }
     }
@@ -94,22 +73,71 @@ public class ItemInteractable : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             canInteract = false;
+            isInDialogue = false;
             if (interactionPrompt != null)
             {
                 interactionPrompt.gameObject.SetActive(false);
             }
+            interactButton.enabled = false;
+            FindObjectOfType<DialogueManager>().EndDialogue();
+            StopAllCoroutines();
+            cooldownActive = false;
         }
     }
 
-    void TriggerInteraction()
+    void Update()
     {
+        DialogueManager dialogueManager = FindObjectOfType<DialogueManager>();
+        bool isDialogueActive = dialogueManager != null && dialogueManager.IsDialogueActive();
+
+        if (isInDialogue && !isDialogueActive)
+        {
+            isInDialogue = false;
+            StartCoroutine(StartReinteractCooldown());
+        }
+
+        if (interactAction.IsPressed())
+        {
+            if (canInteract && !isInDialogue && !isDialogueActive && (!hasBeenUsed || !isSingleUse) && !cooldownActive)
+            {
+                TriggerInteraction();
+            }
+        }
+    }
+
+    private IEnumerator StartReinteractCooldown()
+    {
+        cooldownActive = true;
+        
+        if (interactionPrompt != null)
+        {
+            interactionPrompt.gameObject.SetActive(false);
+        }
+        
+        yield return new WaitForSeconds(reinteractDelay);
+        
+        cooldownActive = false;
+        
+        if (interactionPrompt != null && canInteract && (!hasBeenUsed || !isSingleUse) && !isInDialogue)
+        {
+            interactionPrompt.gameObject.SetActive(true);
+            interactButton.enabled = true;
+        }
+    }
+
+    public void TriggerInteraction()
+    {
+        isInDialogue = true;
+        if (interactionPrompt != null)
+        {
+            interactionPrompt.gameObject.SetActive(false);
+        }
+
         if (requiresItem && !InventoryManager.Instance.HasItem(requiredItemName))
         {
             if (dialogueSettings.hasDialogue && dialogueSettings.beforeItemDialogue != null)
             {
                 dialogueManager.StartDialogue(dialogueSettings.beforeItemDialogue);
-                isInDialogue = true;
-                UpdatePromptVisibility();
             }
             return;
         }
@@ -119,23 +147,19 @@ public class ItemInteractable : MonoBehaviour
             if (requiresItem && dialogueSettings.afterItemDialogue != null)
             {
                 dialogueManager.StartDialogue(dialogueSettings.afterItemDialogue);
-                isInDialogue = true;
             }
             else if (!requiresItem && dialogueSettings.beforeItemDialogue != null)
             {
                 dialogueManager.StartDialogue(dialogueSettings.beforeItemDialogue);
-                isInDialogue = true;
             }
-            UpdatePromptVisibility();
         }
 
         onInteractionTriggered.Invoke();
-        hasBeenUsed = true;
-        canInteract = false;
         
-        if (interactionPrompt != null)
+        hasBeenUsed = true;
+        if (hasBeenUsed && isSingleUse)
         {
-            interactionPrompt.gameObject.SetActive(false);
+            canInteract = false;
         }
     }
 } 
