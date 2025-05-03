@@ -13,7 +13,6 @@ public class ItemInteractable : MonoBehaviour
     [SerializeField] private bool isSingleUse = true;
 
     [Header("UI")]
-    [SerializeField] private Button interactButton;
     public TextMeshProUGUI interactionPrompt;
     public string defaultPromptMessage = "Press E to interact";
     public string itemPromptMessage = "Press E to use {0}";
@@ -63,7 +62,6 @@ public class ItemInteractable : MonoBehaviour
                     interactionPrompt.text = defaultPromptMessage;
                 }
                 interactionPrompt.gameObject.SetActive(true);
-                interactButton.enabled = true;
             }
         }
     }
@@ -78,7 +76,6 @@ public class ItemInteractable : MonoBehaviour
             {
                 interactionPrompt.gameObject.SetActive(false);
             }
-            interactButton.enabled = false;
             FindObjectOfType<DialogueManager>().EndDialogue();
             StopAllCoroutines();
             cooldownActive = false;
@@ -121,7 +118,6 @@ public class ItemInteractable : MonoBehaviour
         if (interactionPrompt != null && canInteract && (!hasBeenUsed || !isSingleUse) && !isInDialogue)
         {
             interactionPrompt.gameObject.SetActive(true);
-            interactButton.enabled = true;
         }
     }
 

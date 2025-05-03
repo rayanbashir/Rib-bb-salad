@@ -20,7 +20,6 @@ public class NPCInt : MonoBehaviour
     public bool isInDialogue = false;
     private InputAction interactAction;
 
-    [SerializeField] private Button interactButton;
 
     void Start()
     {
@@ -45,7 +44,6 @@ public class NPCInt : MonoBehaviour
             {
                 interactionPrompt.text = promptMessage;
                 interactionPrompt.gameObject.SetActive(true);
-                interactButton.enabled = true;
             }
         }
     }
@@ -61,7 +59,6 @@ public class NPCInt : MonoBehaviour
             {
                 interactionPrompt.gameObject.SetActive(false);
             }
-            interactButton.enabled = false;
             FindObjectOfType<DialogueManager>().EndDialogue();
         }
     }

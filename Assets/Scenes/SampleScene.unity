@@ -8923,7 +8923,6 @@ MonoBehaviour:
   requiresItem: 1
   requiredItemName: lighter
   isSingleUse: 1
-  interactButton: {fileID: 0}
   interactionPrompt: {fileID: 459137138}
   defaultPromptMessage: press e to interact
   itemPromptMessage: press e to commit arson
@@ -12235,41 +12234,6 @@ CircleCollider2D:
   m_Offset: {x: 0.000008737281, y: 0}
   serializedVersion: 2
   m_Radius: 19.125864
---- !u!1 &1905039674
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1905039675}
-  m_Layer: 5
-  m_Name: joystick
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1905039675
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1905039674}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.3595, y: 1.3595, z: 1.3595}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1942249636}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -277, y: -120}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1919809821
 GameObject:
   m_ObjectHideFlags: 0
@@ -16861,7 +16825,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1905039675}
   - {fileID: 939620485}
   - {fileID: 459137137}
   - {fileID: 1389416734}
@@ -17447,7 +17410,6 @@ MonoBehaviour:
   interactionPrompt: {fileID: 459137138}
   promptMessage: press E to talk to john prok
   isInDialogue: 0
-  interactButton: {fileID: 0}
 --- !u!1001 &7131145572995979061
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17640,9 +17602,9 @@ SceneRoots:
   - {fileID: 942148032}
   - {fileID: 2094897110}
   - {fileID: 729401558}
+  - {fileID: 750600819}
   - {fileID: 1942249636}
   - {fileID: 1550195931}
   - {fileID: 1844738254}
   - {fileID: 1288413000}
   - {fileID: 766430545}
-  - {fileID: 750600819}
