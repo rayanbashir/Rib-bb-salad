@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Cinemachine;
 
 public class Movement : MonoBehaviour
 {
+    public CinemachineVirtualCamera virtualCamera;
+
     public float moveSpeed;
     public float lastAngle;
+    public float sprintMultiplier = 2f; // Sprint speed multiplier
 
     public bool canMove;
     Rigidbody2D rb;
@@ -29,8 +33,24 @@ public class Movement : MonoBehaviour
         // Get input from both PC and mobile
         Vector2 moveVector = moveAction.ReadValue<Vector2>();
 
+        // Sprint logic: hold Left Shift to sprint
+        float currentSpeed = moveSpeed;
+        bool isSprinting = false;
+        if (Keyboard.current != null && Keyboard.current.leftShiftKey.isPressed)
+        {
+            currentSpeed *= sprintMultiplier;
+            isSprinting = true;
+        }
+
+        // Camera zoom logic
+        if (virtualCamera != null)
+        {
+            float targetOrthoSize = isSprinting ? 6f + 1f : 6f; // Example: base size 6, +1 when sprinting
+            virtualCamera.m_Lens.OrthographicSize = targetOrthoSize;
+        }
+
         // Apply movement speed
-        Vector2 movement = moveVector * moveSpeed;
+        Vector2 movement = moveVector * currentSpeed;
 
         if (canMove)
         {
