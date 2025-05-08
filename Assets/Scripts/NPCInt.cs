@@ -98,7 +98,7 @@ public class NPCInt : MonoBehaviour
     public void TriggerDialogue()
     {
         isInDialogue = true;
-sbyte         // Make the GameObject bigger when interaction is triggered
+     // Make the GameObject bigger when interaction is triggered
         transform.localScale = new Vector3(2f, 2f, 2f); // Adjust scale as needed
 
         if (interactionPrompt != null)
