@@ -1550,6 +1550,7 @@ GameObject:
   - component: {fileID: 571313295}
   - component: {fileID: 571313294}
   - component: {fileID: 571313297}
+  - component: {fileID: 571313298}
   m_Layer: 5
   m_Name: joystickmoveable
   m_TagString: Untagged
@@ -1715,6 +1716,20 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &571313298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 571313292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4d021a253ce73a40923eec44fe5bff1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  joystickUI: {fileID: 571313292}
+  PlayerInteraction: {fileID: 1088480331}
 --- !u!1 &729401556
 GameObject:
   m_ObjectHideFlags: 0
@@ -2771,6 +2786,17 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &1088480331 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2403074141447277883, guid: ddba5422a33ca0c4381e584ec4a4e3d4, type: 3}
+  m_PrefabInstance: {fileID: 7131145572995979061}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1088480324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7c410e1515f9014b8a8bc801e8eb3ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1099000783
 GameObject:
   m_ObjectHideFlags: 0

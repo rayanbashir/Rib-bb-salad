@@ -11,12 +11,16 @@ public class PlayerInteraction : MonoBehaviour
 
     private bool isInteractingWithInventory = false;
 
+    public bool TouchingJoystick = false;
+
     void Awake()
     {
         // Get the actions from the Input System
         interactAction = InputSystem.actions.FindAction("Interact");
         movementAction = InputSystem.actions.FindAction("Movement");
         inventoryAction = InputSystem.actions.FindAction("Inventory");
+
+        TouchingJoystick = false;
     }
 
     void Update()
@@ -26,7 +30,7 @@ public class PlayerInteraction : MonoBehaviour
         bool isInventoryOpen = inventoryAction.IsPressed();
 
         // Disable interact action if player is moving or interacting with inventory
-        if (isMoving || isInventoryOpen)
+        if (isMoving || isInventoryOpen || TouchingJoystick)
         {
             interactAction.Disable();
         }
