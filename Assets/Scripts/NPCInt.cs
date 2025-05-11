@@ -95,10 +95,27 @@ public class NPCInt : MonoBehaviour
     public void TriggerDialogue()
     {
         isInDialogue = true;
+        // Make the GameObject bigger when interaction is triggered
+        transform.localScale = new Vector3(2f, 2f, 15f); // Adjust scale as needed
+
         if (interactionPrompt != null)
         {
             interactionPrompt.gameObject.SetActive(false);
         }
+
+        // Insert a message after "Will you accept or decline?" if it exists
+        string targetSentence = "Will you accept or decline?";
+        string messageToAdd = "This is the message after accept/decline."; // Change this to your desired message
+
+        // Assuming Dialogue has a List<string> or string[] called sentences
+        var sentencesList = new List<string>(currentDialogue.sentences);
+        int idx = sentencesList.IndexOf(targetSentence);
+        if (idx != -1)
+        {
+            sentencesList.Insert(idx + 1, messageToAdd);
+            currentDialogue.sentences = sentencesList.ToArray();
+        }
+
         FindObjectOfType<DialogueManager>().StartDialogue(currentDialogue);
     }
 }

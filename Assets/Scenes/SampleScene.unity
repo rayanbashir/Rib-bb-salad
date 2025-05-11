@@ -17338,6 +17338,12 @@ MonoBehaviour:
     - John pork is calling
     - I am calling lil fella
     - Will you accept or decline?
+    - Here is a new message after the choice.
+    - Another message can go here.
+    - sadfdas
+    - hfgsdjh
+    - sadfdas
+    - hfgsdjh
     LockPlayerMovement: 1
     options:
     - optionText: accept
