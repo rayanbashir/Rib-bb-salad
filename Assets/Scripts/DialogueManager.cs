@@ -196,14 +196,31 @@ public class DialogueManager : MonoBehaviour
     private void SelectOption(DialogueOption option)
     {
         optionsPanel.SetActive(false);
-        
+
         NPCInt currentNPC = FindObjectOfType<NPCInt>();
-        
+
         if (option.changesFutureDialogue && currentNPC.allowDialogueChanges && option.subsequentDialogue != null)
         {
             currentNPC.UpdateDialogue(option.subsequentDialogue);
         }
-        
+
+        // Start coroutine to fetch AI message based on the selected option
+        StartCoroutine(HandleOptionWithAI(option, currentNPC));
+    }
+
+    private IEnumerator HandleOptionWithAI(DialogueOption option, NPCInt currentNPC)
+    {
+        // Compose a prompt based on the option
+        string prompt = "The player chose: \"" + option.optionText + "\". Respond as John Pork accordingly. Keep it short and single sentence.";
+
+        string aiMessage = "Loading AI message...";
+        yield return currentNPC.geminiFetcher.GetGeminiMessage(prompt, msg => aiMessage = msg);
+
+        // Add the AI message to the next dialogue's sentences
+        var sentencesList = new List<string>(option.nextDialogue.sentences);
+        sentencesList.Add(aiMessage);
+        option.nextDialogue.sentences = sentencesList.ToArray();
+
         StartDialogue(option.nextDialogue);
     }
 
