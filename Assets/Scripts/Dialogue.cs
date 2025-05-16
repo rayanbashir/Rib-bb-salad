@@ -17,6 +17,9 @@ public class Dialogue
 
     public DialogueOption[] options;
     public bool hasOptions;
+
+    [TextArea(3,10)]
+    public string prompt; // Add this line for custom prompt
 }
 
 [System.Serializable]
@@ -24,6 +27,5 @@ public class DialogueOption
 {
     public string optionText;
     public Dialogue nextDialogue;
-    public Dialogue subsequentDialogue; // Dialogue to show on next interaction
-    public bool changesFutureDialogue = false; // Flag to control if this option changes future dialogue
+   
 }

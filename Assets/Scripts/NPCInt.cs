@@ -20,6 +20,7 @@ public class NPCInt : MonoBehaviour
     public bool isInDialogue = false;
     private InputAction interactAction;
     public GeminiMessageFetcher geminiFetcher; // Assign in Inspector
+    private string[] originalSentences; // Add this line
 
 
     void Start()
@@ -28,6 +29,7 @@ public class NPCInt : MonoBehaviour
         canInteract = false;
         currentDialogue = dialogue;
         defaultDialogue = dialogue; // Store the original dialogue
+        originalSentences = (string[])dialogue.sentences.Clone(); // Save original sentences
         interactAction = InputSystem.actions.FindAction("Interact");
         if (interactionPrompt != null)
         {
@@ -78,14 +80,6 @@ public class NPCInt : MonoBehaviour
         }
     }
 
-    public void UpdateDialogue(Dialogue newDialogue)
-    {
-        if (allowDialogueChanges)
-        {
-            currentDialogue = newDialogue;
-            hasInteracted = true;
-        }
-    }
 
     public void ResetDialogue()
     {
@@ -107,11 +101,29 @@ public class NPCInt : MonoBehaviour
     {
         string aiMessage = "Loading AI message...";
 
-        yield return geminiFetcher.GetGeminiMessage("initial", msg => aiMessage = msg);
+        yield return geminiFetcher.GetGeminiMessage("initial", currentDialogue.prompt, msg => aiMessage = msg);
 
-        var sentencesList = new List<string>(currentDialogue.sentences);
-        sentencesList.Add(aiMessage); // Always add AI message at the end
-        currentDialogue.sentences = sentencesList.ToArray();
+        // Parse the AI response
+        var parsed = geminiFetcher.ParseGeminiResponse(aiMessage);
+
+        // Set the main message as the only sentence
+        currentDialogue.sentences = new string[] { parsed.mainMessage };
+
+        // Set options if any
+        if (parsed.options != null && parsed.options.Count > 0)
+        {
+            currentDialogue.hasOptions = true;
+            currentDialogue.options = new DialogueOption[parsed.options.Count];
+            for (int i = 0; i < parsed.options.Count; i++)
+            {
+                currentDialogue.options[i] = new DialogueOption { optionText = parsed.options[i] };
+            }
+        }
+        else
+        {
+            currentDialogue.hasOptions = false;
+            currentDialogue.options = new DialogueOption[0];
+        }
 
         FindObjectOfType<DialogueManager>().StartDialogue(currentDialogue);
     }

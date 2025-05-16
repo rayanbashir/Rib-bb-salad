@@ -2178,6 +2178,7 @@ MonoBehaviour:
     LockPlayerMovement: 1
     options: []
     hasOptions: 0
+    prompt: 
 --- !u!4 &766430545
 Transform:
   m_ObjectHideFlags: 0
@@ -9010,6 +9011,7 @@ MonoBehaviour:
       LockPlayerMovement: 1
       options: []
       hasOptions: 0
+      prompt: 
     afterItemDialogue:
       name: 
       showBusts: 0
@@ -9020,6 +9022,7 @@ MonoBehaviour:
       LockPlayerMovement: 1
       options: []
       hasOptions: 0
+      prompt: 
   reinteractDelay: 0.5
   onInteractionTriggered:
     m_PersistentCalls:
@@ -11810,8 +11813,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 178, y: -264}
-  m_SizeDelta: {x: 1215.8083, y: 146.1265}
+  m_AnchoredPosition: {x: 46.875866, y: -256.28683}
+  m_SizeDelta: {x: 916.5272, y: 142.6056}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1799711085
 MonoBehaviour:
@@ -11896,7 +11899,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 255.26935, w: 0}
+  m_margin: {x: 0, y: 0, z: 0.000030758423, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -17383,99 +17386,23 @@ MonoBehaviour:
     sentences: []
     LockPlayerMovement: 1
     options:
-    - optionText: accept
+    - optionText: 
       nextDialogue:
-        name: John Pork
-        showBusts: 1
-        leftBust: {fileID: 21300000, guid: 7ba2cb3b88fecc7429435b10f7666fc7, type: 3}
-        rightBust: {fileID: 21300000, guid: f1bdac8dbaef4b542a03b08568c806cb, type: 3}
-        sentences:
-        - ty fella ur my frind now
-        LockPlayerMovement: 1
-        options: []
-        hasOptions: 0
-      subsequentDialogue:
-        name: john pork
-        showBusts: 1
-        leftBust: {fileID: 21300000, guid: 7ba2cb3b88fecc7429435b10f7666fc7, type: 3}
-        rightBust: {fileID: 21300000, guid: f1bdac8dbaef4b542a03b08568c806cb, type: 3}
-        sentences:
-        - John pork is calling
-        - I am calling lil fella
-        - Will you accept or decline?
-        LockPlayerMovement: 0
-        options:
-        - optionText: accept
-          nextDialogue:
-            name: John Pork
-            showBusts: 1
-            leftBust: {fileID: 21300000, guid: 7ba2cb3b88fecc7429435b10f7666fc7, type: 3}
-            rightBust: {fileID: 21300000, guid: f1bdac8dbaef4b542a03b08568c806cb, type: 3}
-            sentences:
-            - i knew i could count on you big fella
-            LockPlayerMovement: 0
-            options: []
-            hasOptions: 0
-          subsequentDialogue:
-            name: 
-            showBusts: 0
-            leftBust: {fileID: 0}
-            rightBust: {fileID: 0}
-            sentences: []
-            LockPlayerMovement: 0
-            options: []
-            hasOptions: 0
-          changesFutureDialogue: 0
-        - optionText: decline
-          nextDialogue:
-            name: John Pork
-            showBusts: 1
-            leftBust: {fileID: 21300000, guid: 7ba2cb3b88fecc7429435b10f7666fc7, type: 3}
-            rightBust: {fileID: 21300000, guid: f1bdac8dbaef4b542a03b08568c806cb, type: 3}
-            sentences:
-            - 'you betrayed me... never speak to me again '
-            LockPlayerMovement: 0
-            options: []
-            hasOptions: 0
-          subsequentDialogue:
-            name: john prok
-            showBusts: 1
-            leftBust: {fileID: 21300000, guid: 7ba2cb3b88fecc7429435b10f7666fc7, type: 3}
-            rightBust: {fileID: 21300000, guid: f1bdac8dbaef4b542a03b08568c806cb, type: 3}
-            sentences:
-            - Stay away from me betrayer boy
-            - you are the worst
-            LockPlayerMovement: 1
-            options: []
-            hasOptions: 0
-          changesFutureDialogue: 1
-        hasOptions: 1
-      changesFutureDialogue: 1
-    - optionText: decline
-      nextDialogue:
-        name: John Pork
-        showBusts: 1
-        leftBust: {fileID: 21300000, guid: 7ba2cb3b88fecc7429435b10f7666fc7, type: 3}
-        rightBust: {fileID: 21300000, guid: f1bdac8dbaef4b542a03b08568c806cb, type: 3}
-        sentences:
-        - u r dead to me
+        name: 
+        showBusts: 0
+        leftBust: {fileID: 0}
+        rightBust: {fileID: 0}
+        sentences: []
         LockPlayerMovement: 0
         options: []
         hasOptions: 0
-      subsequentDialogue:
-        name: John Pork
-        showBusts: 1
-        leftBust: {fileID: 21300000, guid: 7ba2cb3b88fecc7429435b10f7666fc7, type: 3}
-        rightBust: {fileID: 21300000, guid: f1bdac8dbaef4b542a03b08568c806cb, type: 3}
-        sentences:
-        - Stay away from me
-        - You will never be my friend
-        LockPlayerMovement: 1
-        options: []
-        hasOptions: 0
-      changesFutureDialogue: 1
-    hasOptions: 1
-  allowDialogueChanges: 1
+        prompt: 
+    hasOptions: 0
+    prompt: Converse with the player as if you're John Pork, a humanoid pig. John
+      pork is friendly with the player until they decline his call. When the player
+      starts a conversation i want you to ask if the player will accept or decline
+      your call.
+  allowDialogueChanges: 0
   interactionPrompt: {fileID: 459137138}
   promptMessage: press E to talk to john prok
   isInDialogue: 0

@@ -147,6 +147,7 @@ public class DialogueManager : MonoBehaviour
         optionsPanel.SetActive(false);
         playerMovement.canMove = true;
         showingOptions = false;
+        currentDialogue = null;
 
         NPCInt currentNPC = FindObjectOfType<NPCInt>();
         
@@ -199,24 +200,17 @@ public class DialogueManager : MonoBehaviour
 
         NPCInt currentNPC = FindObjectOfType<NPCInt>();
 
-        if (option.changesFutureDialogue && currentNPC.allowDialogueChanges && option.subsequentDialogue != null)
-        {
-            currentNPC.UpdateDialogue(option.subsequentDialogue);
-        }
-
         // Start coroutine to fetch AI message based on the selected option
         StartCoroutine(HandleOptionWithAI(option, currentNPC));
     }
-
+    
     private IEnumerator HandleOptionWithAI(DialogueOption option, NPCInt currentNPC)
     {
-        // Compose a prompt based on the option
-        string prompt = "The player chose: \"" + option.optionText + "\". Respond as John Pork accordingly. Keep it short and single sentence.";
+        string prompt = option.nextDialogue != null ? option.nextDialogue.prompt : currentDialogue.prompt;
 
         string aiMessage = "Loading AI message...";
-        yield return currentNPC.geminiFetcher.GetGeminiMessage(prompt, msg => aiMessage = msg);
+        yield return currentNPC.geminiFetcher.GetGeminiMessage(option.optionText, prompt, msg => aiMessage = msg);
 
-        // Add the AI message to the next dialogue's sentences
         var sentencesList = new List<string>(option.nextDialogue.sentences);
         sentencesList.Add(aiMessage);
         option.nextDialogue.sentences = sentencesList.ToArray();
@@ -281,4 +275,4 @@ public class DialogueManager : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         npcintscript.isInDialogue = false;
     }
-}
+    }
