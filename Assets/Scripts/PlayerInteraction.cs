@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class PlayerInteraction : MonoBehaviour
 {
-    [SerializeField] private Button interactButton;
     private InputAction interactAction;
     private InputAction movementAction;
     private InputAction inventoryAction;

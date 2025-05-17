@@ -72,7 +72,7 @@ public class NPCInt : MonoBehaviour
         {
             if (canInteract && !isInDialogue && !isDialogueActive)
             {
-                TriggerDialogue();
+                StartCoroutine(DelayedTriggerDialogue());
             }
         }
     }
@@ -100,5 +100,11 @@ public class NPCInt : MonoBehaviour
             interactionPrompt.gameObject.SetActive(false);
         }
         FindObjectOfType<DialogueManager>().StartDialogue(currentDialogue);
+    }
+
+    private IEnumerator DelayedTriggerDialogue()
+    {
+        yield return new WaitForSeconds(0.3f);
+        TriggerDialogue();
     }
 }
