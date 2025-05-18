@@ -11,10 +11,15 @@ public class GeminiMessageFetcher : MonoBehaviour
     public string apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=";
 
     // Add this restriction string (can be made public if you want to edit in Inspector)
-    private string promptRestrictions = 
-        " Don't make the sentences too long and don't add any line breaks." +
-        " Along with the response, also return three one word options for the player to choose from." +
-        " in this JSON format: { \"options\": [ { \"optionText\": \"...\" }, { \"optionText\": \"...\" }, { \"optionText\": \"...\" } ] }";
+    private string promptRestrictions = @"
+    Don't make the sentences too long and don't add any line breaks.
+    Along with the response, also return three one word options for the player to choose from.
+    in this JSON format:
+    {
+    ""mainMessage"": ""..."",
+    ""options"": [option1, option2, option3]
+    }
+    Only return the JSON object, nothing else.";
 
     public IEnumerator GetGeminiMessage(string playerChoice, string customPrompt, System.Action<string> callback)
     {
@@ -24,6 +29,8 @@ public class GeminiMessageFetcher : MonoBehaviour
             : customPrompt;
 
         string fullPrompt = basePrompt + promptRestrictions + " The player chose: \"" + playerChoice + "\". Respond accordingly.";
+
+        Debug.Log("Full Prompt: " + fullPrompt);
 
         string escapedPrompt = fullPrompt.Replace("\"", "\\\"");
         string jsonBody = "{\"contents\":[{\"parts\":[{\"text\":\"" + escapedPrompt + "\"}]}]}";
@@ -39,6 +46,7 @@ public class GeminiMessageFetcher : MonoBehaviour
         if (request.result == UnityWebRequest.Result.Success)
         {
             string response = request.downloadHandler.text;
+            Debug.Log("Gemini API Response: " + response);
             string message = ExtractMessageFromResponse(response);
             callback(message);
         }
@@ -52,10 +60,16 @@ public class GeminiMessageFetcher : MonoBehaviour
     private string ExtractMessageFromResponse(string json)
     {
         var root = JSON.Parse(json);
-        // Gemini's response structure: { "candidates": [ { "content": { "parts": [ { "text": "..." } ] } } ] }
         var text = root?["candidates"]?[0]?["content"]?["parts"]?[0]?["text"];
         if (text == null) return "No message found.";
-        return text.Value;
+
+        // Remove markdown code block if present
+        string raw = text.Value.Trim();
+        var match = Regex.Match(raw, @"```json\s*(.*?)\s*```", RegexOptions.Singleline);
+        if (match.Success)
+            return match.Groups[1].Value.Trim();
+        else
+            return raw;
     }
 
     public class GeminiResponse
@@ -66,22 +80,17 @@ public class GeminiMessageFetcher : MonoBehaviour
 
     public GeminiResponse ParseGeminiResponse(string aiResponse)
     {
-        // Find the JSON block
-        var match = Regex.Match(aiResponse, @"\{[\s\S]*\}");
-        string jsonPart = match.Success ? match.Value : null;
-        string mainMessage = match.Success ? aiResponse.Replace(jsonPart, "").Trim() : aiResponse.Trim();
-
+        // aiResponse is now the JSON string, not the whole markdown block
+        var root = SimpleJSON.JSON.Parse(aiResponse);
+        string mainMessage = root?["mainMessage"];
         List<string> options = new List<string>();
-        if (!string.IsNullOrEmpty(jsonPart))
+
+        var opts = root?["options"];
+        if (opts != null)
         {
-            var root = SimpleJSON.JSON.Parse(jsonPart);
-            var opts = root?["options"];
-            if (opts != null)
+            foreach (var opt in opts.Children)
             {
-                foreach (var opt in opts.Children)
-                {
-                    options.Add(opt["optionText"]);
-                }
+                options.Add(opt.Value);
             }
         }
         return new GeminiResponse { mainMessage = mainMessage, options = options };
