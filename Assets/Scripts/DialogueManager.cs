@@ -29,6 +29,8 @@ public class DialogueManager : MonoBehaviour
     public Image rightBustImage;
     public float bustFadeSpeed = 5f;
 
+    private List<string> conversationHistory = new List<string>();
+
     void Start()
     {
         interactAction = InputSystem.actions.FindAction("Interact");
@@ -53,14 +55,10 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogue(Dialogue dialogue)
     {
         joystick.enabled = false;
-        Debug.Log(dialogue.sentences[0]);
         currentDialogue = dialogue;
-        Debug.Log(currentDialogue.sentences[0]);
         animator.SetBool("IsOpen", true);
-        Debug.Log(sentences);
         sentences.Clear(); 
         nameText.text = dialogue.name;
-        Debug.Log(dialogue.LockPlayerMovement); 
         playerMovement.canMove = !dialogue.LockPlayerMovement;
 
         // Handle character busts
@@ -69,17 +67,12 @@ public class DialogueManager : MonoBehaviour
         {
             leftBustImage.sprite = dialogue.leftBust;
             rightBustImage.sprite = dialogue.rightBust;
-            
-            // Set alpha directly to 1
             Color leftColor = leftBustImage.color;
             Color rightColor = rightBustImage.color;
             leftColor.a = 1f;
             rightColor.a = 1f;
             leftBustImage.color = leftColor;
             rightBustImage.color = rightColor;
-            
-            // Comment out fade for now
-            // StartCoroutine(FadeBustsIn());
         }
 
         foreach (string sentence in dialogue.sentences)
@@ -198,23 +191,27 @@ public class DialogueManager : MonoBehaviour
     {
         optionsPanel.SetActive(false);
 
-        NPCInt currentNPC = FindObjectOfType<NPCInt>();
+        // Add user response to history
+        conversationHistory.Add($"Player: {option.optionText}");
 
-        // Start coroutine to fetch AI message based on the selected option
+        NPCInt currentNPC = FindObjectOfType<NPCInt>();
         StartCoroutine(HandleOptionWithAI(option, currentNPC));
     }
-    
+
     private IEnumerator HandleOptionWithAI(DialogueOption option, NPCInt currentNPC)
     {
         string prompt = option.nextDialogue != null ? option.nextDialogue.prompt : currentDialogue.prompt;
 
-        string aiResponseJson = "Loading AI message...";
-        yield return currentNPC.geminiFetcher.GetGeminiMessage(option.optionText, prompt, msg => aiResponseJson = msg);
+        // Build history string
+        string history = string.Join("\n", conversationHistory);
+        string aiResponseJson = null;
+        yield return currentNPC.geminiFetcher.GetGeminiMessage(option.optionText, history, msg => aiResponseJson = msg);
 
-        // Parse the AI response JSON
         var geminiResponse = currentNPC.geminiFetcher.ParseGeminiResponse(aiResponseJson);
 
-        // Create new Dialogue for the AI response
+        // Add AI response to history
+        conversationHistory.Add($"{currentDialogue.name}: {geminiResponse.mainMessage}");
+
         Dialogue aiDialogue = new Dialogue
         {
             name = currentDialogue.name,
@@ -228,7 +225,6 @@ public class DialogueManager : MonoBehaviour
             LockPlayerMovement = currentDialogue.LockPlayerMovement
         };
 
-        // If there are AI-generated options, create DialogueOption array
         if (aiDialogue.hasOptions)
         {
             aiDialogue.options = new DialogueOption[geminiResponse.options.Count];
@@ -237,7 +233,7 @@ public class DialogueManager : MonoBehaviour
                 aiDialogue.options[i] = new DialogueOption
                 {
                     optionText = geminiResponse.options[i],
-                    nextDialogue = null // Will be generated dynamically on next selection
+                    nextDialogue = null
                 };
             }
         }
@@ -283,7 +279,6 @@ public class DialogueManager : MonoBehaviour
 
         while (leftColor.a > 0f)
         {
-            leftColor.a -= Time.deltaTime * bustFadeSpeed;
             rightColor.a -= Time.deltaTime * bustFadeSpeed;
             
             // Clamp values to prevent going below 0

@@ -17401,7 +17401,8 @@ MonoBehaviour:
     prompt: Converse with the player as if you're John Pork, a humanoid pig. John
       pork is friendly with the player until they decline his call. When the player
       starts a conversation i want you to ask if the player will accept or decline
-      your call.
+      your call. John pork becomes extremely aggresive and unforgiving and mean after
+      the player declines.
   allowDialogueChanges: 0
   interactionPrompt: {fileID: 459137138}
   promptMessage: press E to talk to john prok

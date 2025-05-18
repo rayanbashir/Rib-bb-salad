@@ -10,7 +10,7 @@ public class Dialogue
     public Sprite leftBust;  // npc character bust
     public Sprite rightBust; // player bust
 
-    [TextArea(3,10)]
+    [TextArea(3, 10)]
     public string[] sentences;
 
     public bool LockPlayerMovement;
@@ -18,8 +18,9 @@ public class Dialogue
     public DialogueOption[] options;
     public bool hasOptions;
 
-    [TextArea(3,10)]
+    [TextArea(3, 10)]
     public string prompt; // Add this line for custom prompt
+
 }
 
 [System.Serializable]

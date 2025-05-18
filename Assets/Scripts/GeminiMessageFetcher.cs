@@ -23,12 +23,19 @@ public class GeminiMessageFetcher : MonoBehaviour
 
     public IEnumerator GetGeminiMessage(string playerChoice, string customPrompt, System.Action<string> callback)
     {
-        // Use the custom prompt from Dialogue, or fallback to a default
-        string basePrompt = string.IsNullOrEmpty(customPrompt) 
-            ? "Converse with the player as if you're John Pork. John Pork is friendly until the player declines his call and then he becomes hostile. John Pork will ask the player whether they will answer or decline his call."
-            : customPrompt;
+        // The base prompt, always the same
+        string basePrompt = @"Converse with the player as if you're John Pork, a humanoid pig. John pork is friendly with the player until they decline his call. When the player starts a conversation i want you to ask if the player will accept or decline your call. John pork becomes extremely aggresive and unforgiving and mean after the player declines.
+Don't make the sentences too long and don't add any line breaks.
+Along with the response, also return three one word options for the player to choose from.
+in this JSON format:
+{
+""mainMessage"": ""..."",
+""options"": [option1, option2, option3]
+}";
 
-        string fullPrompt = basePrompt + promptRestrictions + " The player chose: \"" + playerChoice + "\". Respond accordingly.";
+        // Build the full prompt in your required format
+        string fullPrompt = basePrompt + "\nConversation so far:\n" + customPrompt +
+            $"\nDon't make the sentences too long and don't add any line breaks.\nAlong with the response, also return three one word options for the player to choose from.\nin this JSON format:\n{{\n\"mainMessage\": \"...\",\n\"options\": [option1, option2, option3]\n}}\nOnly return the JSON object, nothing else. The player chose: \"{playerChoice}\". Respond accordingly.";
 
         Debug.Log("Full Prompt: " + fullPrompt);
 
