@@ -208,14 +208,41 @@ public class DialogueManager : MonoBehaviour
     {
         string prompt = option.nextDialogue != null ? option.nextDialogue.prompt : currentDialogue.prompt;
 
-        string aiMessage = "Loading AI message...";
-        yield return currentNPC.geminiFetcher.GetGeminiMessage(option.optionText, prompt, msg => aiMessage = msg);
+        string aiResponseJson = "Loading AI message...";
+        yield return currentNPC.geminiFetcher.GetGeminiMessage(option.optionText, prompt, msg => aiResponseJson = msg);
 
-        var sentencesList = new List<string>(option.nextDialogue.sentences);
-        sentencesList.Add(aiMessage);
-        option.nextDialogue.sentences = sentencesList.ToArray();
+        // Parse the AI response JSON
+        var geminiResponse = currentNPC.geminiFetcher.ParseGeminiResponse(aiResponseJson);
 
-        StartDialogue(option.nextDialogue);
+        // Create new Dialogue for the AI response
+        Dialogue aiDialogue = new Dialogue
+        {
+            name = currentDialogue.name,
+            prompt = prompt,
+            sentences = new string[] { geminiResponse.mainMessage },
+            hasOptions = geminiResponse.options != null && geminiResponse.options.Count > 0,
+            options = null,
+            showBusts = currentDialogue.showBusts,
+            leftBust = currentDialogue.leftBust,
+            rightBust = currentDialogue.rightBust,
+            LockPlayerMovement = currentDialogue.LockPlayerMovement
+        };
+
+        // If there are AI-generated options, create DialogueOption array
+        if (aiDialogue.hasOptions)
+        {
+            aiDialogue.options = new DialogueOption[geminiResponse.options.Count];
+            for (int i = 0; i < geminiResponse.options.Count; i++)
+            {
+                aiDialogue.options[i] = new DialogueOption
+                {
+                    optionText = geminiResponse.options[i],
+                    nextDialogue = null // Will be generated dynamically on next selection
+                };
+            }
+        }
+
+        StartDialogue(aiDialogue);
     }
 
     public bool IsDialogueActive()
