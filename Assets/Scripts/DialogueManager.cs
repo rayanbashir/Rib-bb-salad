@@ -28,6 +28,12 @@ public class DialogueManager : MonoBehaviour
 
 
 
+    [Header("Voice Output")]
+    public AudioSource speakerAudioSource;
+    [Header("ElevenLabs TTS")]
+    public string elevenLabsApiKey = "YOUR_ELEVENLABS_API_KEY";
+    public string elevenLabsVoiceId = "YOUR_VOICE_ID";
+
     void Start()
     {
         interactAction = InputSystem.actions.FindAction("Interact");
@@ -114,6 +120,7 @@ public class DialogueManager : MonoBehaviour
         string sentence = sentences.Dequeue();
         StopAllCoroutines();
         StartCoroutine(TypeSentence(sentence));
+        StartCoroutine(SpeakWithElevenLabs(sentence)); // Speak the sentence
     }
 
     IEnumerator TypeSentence (string sentence)
@@ -123,6 +130,47 @@ public class DialogueManager : MonoBehaviour
         {
             dialogueText.text += letter;
             yield return null;
+        }
+    }
+
+    IEnumerator SpeakWithElevenLabs(string text)
+    {
+        string url = $"https://api.elevenlabs.io/v1/text-to-speech/{elevenLabsVoiceId}";
+        var request = new UnityEngine.Networking.UnityWebRequest(url, "POST");
+        string jsonBody = "{\"text\":\"" + text.Replace("\"", "\\\"") + "\",\"voice_settings\":{\"stability\":0.5,\"similarity_boost\":0.5}}";
+        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonBody);
+        request.uploadHandler = new UnityEngine.Networking.UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = new UnityEngine.Networking.DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+        request.SetRequestHeader("xi-api-key", elevenLabsApiKey);
+        request.SetRequestHeader("Accept", "audio/mpeg");
+
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityEngine.Networking.UnityWebRequest.Result.Success)
+        {
+            byte[] audioData = request.downloadHandler.data;
+            string tempPath = System.IO.Path.Combine(Application.persistentDataPath, "tts.mp3");
+            System.IO.File.WriteAllBytes(tempPath, audioData);
+            using (var www = UnityEngine.Networking.UnityWebRequestMultimedia.GetAudioClip("file://" + tempPath, AudioType.MPEG))
+            {
+                yield return www.SendWebRequest();
+                if (www.result == UnityEngine.Networking.UnityWebRequest.Result.Success)
+                {
+                    AudioClip clip = UnityEngine.Networking.DownloadHandlerAudioClip.GetContent(www);
+                    speakerAudioSource.Stop();
+                    speakerAudioSource.clip = clip;
+                    speakerAudioSource.Play();
+                }
+                else
+                {
+                    Debug.LogError("Failed to load TTS audio: " + www.error);
+                }
+            }
+        }
+        else
+        {
+            Debug.LogError("ElevenLabs TTS Error: " + request.error);
         }
     }
 
