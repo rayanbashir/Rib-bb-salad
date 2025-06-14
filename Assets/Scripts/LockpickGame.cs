@@ -6,9 +6,9 @@ using UnityEngine.UI; // At the top if not already
 
 public class LockpickGame : MonoBehaviour
 {
-    
+
     [SerializeField] private Canvas joystick;
-    public Canvas canvas;        // Assign in inspector
+    public GameObject panel;        // Assign in inspector
     public RectTransform pointer;      // Assign in inspector
     public RectTransform bar;          // Assign in inspector
     public RectTransform greenZone;    // Assign in inspector
@@ -38,6 +38,7 @@ public class LockpickGame : MonoBehaviour
         pointerSpeed = defaultPointerSpeed;
         greenZone.sizeDelta = new Vector2(greenZoneSize, greenZone.sizeDelta.y); // Reset size
     }
+
     void OnEnable()
     {
         interactAction = InputSystem.actions.FindAction("Interact");
@@ -55,12 +56,12 @@ public class LockpickGame : MonoBehaviour
     {
         if (!gameActive)
         {
-            canvas.enabled = false;
+            panel.SetActive(false);
             return;
         }
         else
         {
-            canvas.enabled = true;
+            panel.SetActive(true);
         }
 
         // Move pointer back and forth
@@ -146,3 +147,5 @@ public class LockpickGame : MonoBehaviour
         }
     }
 }
+
+   
