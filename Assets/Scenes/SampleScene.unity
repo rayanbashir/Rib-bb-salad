@@ -2466,112 +2466,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &763708487
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 763708490}
-  - component: {fileID: 763708489}
-  - component: {fileID: 763708488}
-  m_Layer: 0
-  m_Name: dotdotdot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!95 &763708488
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 763708487}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: bc44a54fcd1d8c14ca4b071e5f9c6e73, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!212 &763708489
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 763708487}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1589466729
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a81b30cda727bba40bdb76a6082240dc, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
---- !u!4 &763708490
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 763708487}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 7.12, z: 0}
-  m_LocalScale: {x: 2.7427354, y: 2.7427354, z: 2.7427354}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2094897110}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &766430543
 GameObject:
   m_ObjectHideFlags: 0
@@ -18196,249 +18090,68 @@ Transform:
   - {fileID: 2094897110}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2094897108
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2094897110}
-  - component: {fileID: 2094897109}
-  - component: {fileID: 2094897112}
-  - component: {fileID: 2094897111}
-  m_Layer: 0
-  m_Name: John Pork
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!212 &2094897109
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2094897108}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1570711803
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7ba2cb3b88fecc7429435b10f7666fc7, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
---- !u!4 &2094897110
+--- !u!4 &2094897110 stripped
 Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 4730893104992513006, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+  m_PrefabInstance: {fileID: 3639998664751872678}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2094897108}
+--- !u!1001 &3639998664751872678
+PrefabInstance:
+  m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -18.219923, y: 3.3813524, z: 0}
-  m_LocalScale: {x: 0.15865096, y: 0.15865096, z: 0.15865096}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 763708490}
-  m_Father: {fileID: 2088522597}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &2094897111
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2094897108}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.11370987, y: -4.518386}
-  m_Size: {x: 18.083275, y: 19.372044}
-  m_Direction: 0
---- !u!114 &2094897112
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2094897108}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ff6d81ec8e1c1345b1458f01e9497fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactMark: {fileID: 763708487}
-  animator: {fileID: 763708488}
-  dialogue:
-    name: John Pork
-    showBusts: 1
-    leftBust: {fileID: 21300000, guid: 7ba2cb3b88fecc7429435b10f7666fc7, type: 3}
-    rightBust: {fileID: 21300000, guid: f1bdac8dbaef4b542a03b08568c806cb, type: 3}
-    sentences:
-    - John pork is calling
-    - I am calling lil fella
-    - Will you accept or decline?
-    LockPlayerMovement: 1
-    options:
-    - optionText: accept
-      nextDialogue:
-        name: John Pork
-        showBusts: 1
-        leftBust: {fileID: 21300000, guid: 7ba2cb3b88fecc7429435b10f7666fc7, type: 3}
-        rightBust: {fileID: 21300000, guid: f1bdac8dbaef4b542a03b08568c806cb, type: 3}
-        sentences:
-        - ty fella ur my frind now
-        LockPlayerMovement: 1
-        options: []
-        hasOptions: 0
-      subsequentDialogue:
-        name: john pork
-        showBusts: 1
-        leftBust: {fileID: 21300000, guid: 7ba2cb3b88fecc7429435b10f7666fc7, type: 3}
-        rightBust: {fileID: 21300000, guid: f1bdac8dbaef4b542a03b08568c806cb, type: 3}
-        sentences:
-        - John pork is calling
-        - I am calling lil fella
-        - Will you accept or decline?
-        LockPlayerMovement: 0
-        options:
-        - optionText: accept
-          nextDialogue:
-            name: John Pork
-            showBusts: 1
-            leftBust: {fileID: 21300000, guid: 7ba2cb3b88fecc7429435b10f7666fc7, type: 3}
-            rightBust: {fileID: 21300000, guid: f1bdac8dbaef4b542a03b08568c806cb, type: 3}
-            sentences:
-            - i knew i could count on you big fella
-            LockPlayerMovement: 0
-            options: []
-            hasOptions: 0
-          subsequentDialogue:
-            name: 
-            showBusts: 0
-            leftBust: {fileID: 0}
-            rightBust: {fileID: 0}
-            sentences: []
-            LockPlayerMovement: 0
-            options: []
-            hasOptions: 0
-          changesFutureDialogue: 0
-        - optionText: decline
-          nextDialogue:
-            name: John Pork
-            showBusts: 1
-            leftBust: {fileID: 21300000, guid: 7ba2cb3b88fecc7429435b10f7666fc7, type: 3}
-            rightBust: {fileID: 21300000, guid: f1bdac8dbaef4b542a03b08568c806cb, type: 3}
-            sentences:
-            - 'you betrayed me... never speak to me again '
-            LockPlayerMovement: 0
-            options: []
-            hasOptions: 0
-          subsequentDialogue:
-            name: john prok
-            showBusts: 1
-            leftBust: {fileID: 21300000, guid: 7ba2cb3b88fecc7429435b10f7666fc7, type: 3}
-            rightBust: {fileID: 21300000, guid: f1bdac8dbaef4b542a03b08568c806cb, type: 3}
-            sentences:
-            - Stay away from me betrayer boy
-            - you are the worst
-            LockPlayerMovement: 1
-            options: []
-            hasOptions: 0
-          changesFutureDialogue: 1
-        hasOptions: 1
-      changesFutureDialogue: 1
-    - optionText: decline
-      nextDialogue:
-        name: John Pork
-        showBusts: 1
-        leftBust: {fileID: 21300000, guid: 7ba2cb3b88fecc7429435b10f7666fc7, type: 3}
-        rightBust: {fileID: 21300000, guid: f1bdac8dbaef4b542a03b08568c806cb, type: 3}
-        sentences:
-        - u r dead to me
-        LockPlayerMovement: 0
-        options: []
-        hasOptions: 0
-      subsequentDialogue:
-        name: John Pork
-        showBusts: 1
-        leftBust: {fileID: 21300000, guid: 7ba2cb3b88fecc7429435b10f7666fc7, type: 3}
-        rightBust: {fileID: 21300000, guid: f1bdac8dbaef4b542a03b08568c806cb, type: 3}
-        sentences:
-        - Stay away from me
-        - You will never be my friend
-        LockPlayerMovement: 1
-        options: []
-        hasOptions: 0
-      changesFutureDialogue: 1
-    hasOptions: 1
-  allowDialogueChanges: 1
-  interactionPrompt: {fileID: 459137138}
-  promptMessage: press E to talk to john prok
-  isInDialogue: 0
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2088522597}
+    m_Modifications:
+    - target: {fileID: 4730893104992513006, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -18.219923
+      objectReference: {fileID: 0}
+    - target: {fileID: 4730893104992513006, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.3813524
+      objectReference: {fileID: 0}
+    - target: {fileID: 4730893104992513006, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4730893104992513006, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4730893104992513006, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4730893104992513006, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4730893104992513006, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4730893104992513006, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4730893104992513006, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4730893104992513006, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6049257775198121927, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: m_Name
+      value: John Pork
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
 --- !u!1001 &7131145572995979061
 PrefabInstance:
   m_ObjectHideFlags: 0

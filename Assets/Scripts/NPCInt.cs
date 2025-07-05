@@ -15,8 +15,6 @@ public class NPCInt : MonoBehaviour
     private bool hasInteracted = false;
     public bool allowDialogueChanges = false; // Toggle for dialogue change feature
     private Dialogue defaultDialogue; // Store the original dialogue
-    public TextMeshProUGUI interactionPrompt; // Reference to UI text element
-    public string promptMessage = "Press E to interact"; // Customizable message
     public bool isInDialogue = false;
     private InputAction interactAction;
 
@@ -28,9 +26,9 @@ public class NPCInt : MonoBehaviour
         currentDialogue = dialogue;
         defaultDialogue = dialogue; // Store the original dialogue
         interactAction = InputSystem.actions.FindAction("Interact");
-        if (interactionPrompt != null)
+        if (interactMark != null)
         {
-            interactionPrompt.gameObject.SetActive(false);
+            interactMark.SetActive(false);
         }
     }
 
@@ -38,13 +36,12 @@ public class NPCInt : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            animator.SetBool("inRange", true);
             canInteract = true;
-            if (interactionPrompt != null && !isInDialogue)
+            if (interactMark != null && !isInDialogue)
             {
-                interactionPrompt.text = promptMessage;
-                interactionPrompt.gameObject.SetActive(true);
+                interactMark.SetActive(true);
             }
+            animator.SetBool("inRange", true);
         }
     }
 
@@ -55,9 +52,9 @@ public class NPCInt : MonoBehaviour
             animator.SetBool("inRange", false);
             canInteract = false;
             isInDialogue = false;
-            if (interactionPrompt != null)
+            if (interactMark != null)
             {
-                interactionPrompt.gameObject.SetActive(false);
+                interactMark.SetActive(false);
             }
             FindObjectOfType<DialogueManager>().EndDialogue();
         }
@@ -95,9 +92,9 @@ public class NPCInt : MonoBehaviour
     public void TriggerDialogue()
     {
         isInDialogue = true;
-        if (interactionPrompt != null)
+        if (interactMark != null)
         {
-            interactionPrompt.gameObject.SetActive(false);
+            interactMark.SetActive(false);
         }
         FindObjectOfType<DialogueManager>().StartDialogue(currentDialogue);
     }
@@ -108,3 +105,4 @@ public class NPCInt : MonoBehaviour
         TriggerDialogue();
     }
 }
+
