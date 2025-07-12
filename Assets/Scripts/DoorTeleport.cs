@@ -6,12 +6,16 @@ public class DoorTeleport : MonoBehaviour
     public float verticalOffset = -1f; // Optional offset to place player slightly in front of destination
     public float horizontalOffset = -0.5f;
     public float exitDirection = -180f; // 0 = up, 90 = right, 180 = down, -90 = left
-    public Movement playerMovement; 
+    public Movement playerMovement;
     public Animator animator;
-    private void OnTriggerEnter2D(Collider2D other)
+
+    public bool isActive = true; // Flag to check if the door is active
+
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
+            if (!isActive) return; // If the door is not active, do nothing
             StartCoroutine(TeleportPlayer(other.transform, 1f));
         }
     }
@@ -22,13 +26,13 @@ public class DoorTeleport : MonoBehaviour
         if (destination != null)
         {
             animator.SetTrigger("FadeOut");
-            playerMovement.canMove = false; 
+            playerMovement.canMove = false;
             yield return new WaitForSeconds(delayTime);
             Debug.Log("Baaaaaaakaaaaaaaaaaaaaaaa");
             Vector2 targetPosition = destination.position;
             targetPosition.y += (verticalOffset);
             targetPosition.x += (horizontalOffset);
-            
+
             player.position = targetPosition;
 
             yield return new WaitForSeconds(delayTime);
@@ -40,6 +44,11 @@ public class DoorTeleport : MonoBehaviour
     void EnablePlayerMovement()
     {
         playerMovement.canMove = true;
+    }
+    
+    public void ActivateDoor()
+    {
+        isActive = true;
     }
 
 }

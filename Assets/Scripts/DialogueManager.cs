@@ -20,7 +20,7 @@ public class DialogueManager : MonoBehaviour
 
     private InputAction interactAction;
 
-
+    public PlayerProgress playerProgress;
     private Queue<string> sentences;
 
     [Header("Character Busts")]
@@ -141,6 +141,7 @@ public class DialogueManager : MonoBehaviour
             StartCoroutine(FadeBustsOut());
         }
 
+        playerProgress.TalkToNPC(currentDialogue.name);
         joystick.enabled = true;
         Debug.Log("End of conversation");
         animator.SetBool("IsOpen", false);

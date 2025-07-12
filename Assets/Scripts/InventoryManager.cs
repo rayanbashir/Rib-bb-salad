@@ -14,6 +14,7 @@ public class InventoryManager : MonoBehaviour
     private List<string> inventory = new List<string>();
     private bool isInventoryOpen = false;
     private InputAction invAction;
+    public PlayerProgress playerProgress;
 
     private void Awake()
     {
@@ -44,6 +45,7 @@ public class InventoryManager : MonoBehaviour
         inventory.Add(itemName);
         Debug.Log($"Added {itemName} to inventory");
         UpdateInventoryUI();
+        playerProgress.CollectItem(itemName);
     }
 
     public bool HasItem(string itemName)
