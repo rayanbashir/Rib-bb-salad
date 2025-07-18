@@ -7,12 +7,12 @@ using UnityEngine.Events;
 
 public class StoryManager : MonoBehaviour
 {
-    public TextMeshProUGUI ObjectiveText; // UI text to show current objective
+    public TextMeshProUGUI ObjectiveText;
     public PlayerProgress playerProgress;
 
     [Header("Objective Setup")]
-    public Objective[] allObjectives; // List of all objectives (can be manually assigned)
-    
+    public Objective[] allObjectives;
+
     private Objective _currentObjective;
     public Objective currentObjective
     {
@@ -20,7 +20,13 @@ public class StoryManager : MonoBehaviour
         set
         {
             _currentObjective = value;
-            UpdateObjectiveText();
+
+            if (_currentObjective != null)
+            {
+                _currentObjective.isActive = true;
+                AssignCompletionCondition(_currentObjective);
+                UpdateObjectiveText();
+            }
         }
     }
 
@@ -28,16 +34,12 @@ public class StoryManager : MonoBehaviour
     {
         if (allObjectives.Length > 0)
         {
-            currentObjective = allObjectives[0]; // Start with the first objective
-            currentObjective.isActive = true;
-
-             allObjectives[0].completionCondition = () => playerProgress.HasTalkedTo("Chief");
+            currentObjective = allObjectives[0];
         }
     }
 
     void Update()
     {
-        // Check if current objective should be auto-completed
         if (currentObjective != null &&
             !currentObjective.isCompleted &&
             currentObjective.completionCondition != null &&
@@ -64,20 +66,44 @@ public class StoryManager : MonoBehaviour
         if (currentObjective == null || currentObjective.isCompleted)
             return;
 
-        currentObjective.CompleteObjective(); // Marks it completed and runs event
+        currentObjective.CompleteObjective(); // ✅ Actually calls the method below
 
-        // Move to the next objective, if any
         if (currentObjective.nextObjectives != null && currentObjective.nextObjectives.Length > 0)
         {
-            currentObjective = currentObjective.nextObjectives[0]; // For now, pick first next
-            currentObjective.isActive = true;
+            currentObjective = currentObjective.nextObjectives[0];
         }
         else
         {
-            currentObjective = null; // No more objectives
+            currentObjective = null;
         }
 
         UpdateObjectiveText();
+    }
+
+    void AssignCompletionCondition(Objective obj)
+    {
+        switch (obj.conditionType)
+        {
+            case ObjectiveConditionType.TalkToNPC:
+                obj.completionCondition = () => playerProgress.HasTalkedTo(obj.targetName);
+                break;
+
+            case ObjectiveConditionType.CollectItem:
+                obj.completionCondition = () => playerProgress.HasItem(obj.targetName);
+                break;
+
+            case ObjectiveConditionType.EnterZone:
+                obj.completionCondition = () => obj.targetZone != null && obj.targetZone.isPlayerInside;
+                break;
+
+            case ObjectiveConditionType.Custom:
+                obj.completionCondition = null;
+                break;
+
+            default:
+                obj.completionCondition = null;
+                break;
+        }
     }
 }
 
@@ -93,12 +119,22 @@ public class Objective
     public bool isActive = false;
 
     [Header("Flow")]
-    public Objective[] nextObjectives; // What comes next
-    public Objective previousObjective; // What came before
+    public Objective[] nextObjectives;
+    public Objective previousObjective;
 
     [Header("Events & Logic")]
-    public UnityEvent onObjectiveCompleted; // Run this when completed
-    [NonSerialized] public Func<bool> completionCondition; // Custom check function
+    public UnityEvent onObjectiveCompleted;
+
+    [Tooltip("Generic condition type.")]
+    public ObjectiveConditionType conditionType = ObjectiveConditionType.None;
+
+    [Tooltip("For TalkToNPC / CollectItem: target name (e.g. NPC name or item ID).")]
+    public string targetName;
+
+    [Tooltip("For EnterZone: assign the zone trigger manually.")]
+    public ObjectiveZone targetZone;
+
+    [NonSerialized] public Func<bool> completionCondition;
 
     public void CompleteObjective()
     {
@@ -106,7 +142,17 @@ public class Objective
 
         isCompleted = true;
         isActive = false;
-        onObjectiveCompleted?.Invoke();
-        Debug.Log("Objective Complete: " + title);
+
+        Debug.Log("✅ Objective completed: " + title);
+        onObjectiveCompleted?.Invoke(); // ✅ This line was missing in your version
     }
+}
+
+public enum ObjectiveConditionType
+{
+    None,
+    TalkToNPC,
+    CollectItem,
+    EnterZone,
+    Custom
 }

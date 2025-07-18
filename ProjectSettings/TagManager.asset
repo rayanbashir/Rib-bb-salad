@@ -42,6 +42,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: on topo
+  - name: npc
     uniqueID: 185128879
+    locked: 0
+  - name: player
+    uniqueID: 982526521
+    locked: 0
+  - name: on top of player
+    uniqueID: 3665790833
     locked: 0

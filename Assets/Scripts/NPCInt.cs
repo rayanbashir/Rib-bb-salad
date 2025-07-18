@@ -9,11 +9,14 @@ public class NPCInt : MonoBehaviour
 {
     public GameObject interactMark;
     public Animator animator;
+    public DialogueManager dialogueManager;
     private bool canInteract;
     public Dialogue dialogue;
     private Dialogue currentDialogue; // Track current dialogue state
     private bool hasInteracted = false;
     public bool allowDialogueChanges = false; // Toggle for dialogue change feature
+    public bool oneTimeOnly = false; // Toggle to allow only one conversation
+    private bool hasSpokenOnce = false; // Track if player has already spoken to this NPC
     private Dialogue defaultDialogue; // Store the original dialogue
     public bool isInDialogue = false;
     private InputAction interactAction;
@@ -36,6 +39,12 @@ public class NPCInt : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            // Don't allow interaction if it's one-time only and already spoken
+            if (oneTimeOnly && hasSpokenOnce)
+            {
+                return;
+            }
+            
             canInteract = true;
             if (interactMark != null && !isInDialogue)
             {
@@ -56,20 +65,21 @@ public class NPCInt : MonoBehaviour
             {
                 interactMark.SetActive(false);
             }
-            FindObjectOfType<DialogueManager>().EndDialogue();
+            dialogueManager.EndDialogue();
         }
     }
 
     void Update()
     {
-        DialogueManager dialogueManager = FindObjectOfType<DialogueManager>();
-        bool isDialogueActive = dialogueManager != null && dialogueManager.IsDialogueActive();
+        bool isDialogueActive = dialogueManager.IsDialogueActive();
 
         if (interactAction.IsPressed())
         {
-            if (canInteract && !isInDialogue && !isDialogueActive)
+            // Don't allow interaction if it's one-time only and already spoken
+            if (canInteract && !isInDialogue && !isDialogueActive && !(oneTimeOnly && hasSpokenOnce))
             {
                 StartCoroutine(DelayedTriggerDialogue());
+                Debug.Log("Interact pressed");
             }
         }
     }
@@ -89,6 +99,12 @@ public class NPCInt : MonoBehaviour
         hasInteracted = false;
     }
 
+    public void ResetOneTimeInteraction()
+    {
+        hasSpokenOnce = false;
+        Debug.Log("Reset one-time interaction for " + gameObject.name);
+    }
+
     public void TriggerDialogue()
     {
         isInDialogue = true;
@@ -96,7 +112,15 @@ public class NPCInt : MonoBehaviour
         {
             interactMark.SetActive(false);
         }
-        FindObjectOfType<DialogueManager>().StartDialogue(currentDialogue);
+        
+        // Mark as spoken if it's one-time only
+        if (oneTimeOnly)
+        {
+            hasSpokenOnce = true;
+        }
+        
+        dialogueManager.StartDialogue(currentDialogue, this);
+        Debug.Log("Triggered dialogue with " + gameObject.name);
     }
 
     private IEnumerator DelayedTriggerDialogue()

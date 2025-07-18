@@ -9,6 +9,7 @@ using UnityEngine.InputSystem;
 public class DialogueManager : MonoBehaviour
 {
     private Dialogue currentDialogue;
+    private NPCInt currentNPC; // Track which NPC started the dialogue
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI dialogueText;
     public Movement playerMovement;
@@ -52,9 +53,15 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue)
     {
+        StartDialogue(dialogue, null);
+    }
+
+    public void StartDialogue(Dialogue dialogue, NPCInt npc)
+    {
         joystick.enabled = false;
         Debug.Log(dialogue.sentences[0]);
         currentDialogue = dialogue;
+        currentNPC = npc; // Track which NPC started this dialogue
         Debug.Log(currentDialogue.sentences[0]);
         animator.SetBool("IsOpen", true);
         Debug.Log(sentences);
@@ -149,13 +156,16 @@ public class DialogueManager : MonoBehaviour
         playerMovement.canMove = true;
         showingOptions = false;
 
-        NPCInt currentNPC = FindObjectOfType<NPCInt>();
+        NPCInt npcToUndialogue = currentNPC != null ? currentNPC : FindObjectOfType<NPCInt>();
         
 
-        if (currentNPC != null)
+        if (npcToUndialogue != null)
         {
-            StartCoroutine(Undialogue(currentNPC));
+            StartCoroutine(Undialogue(npcToUndialogue));
         }
+        
+        // Clear the current NPC reference
+        currentNPC = null;
     }
 
 
@@ -198,14 +208,12 @@ public class DialogueManager : MonoBehaviour
     {
         optionsPanel.SetActive(false);
         
-        NPCInt currentNPC = FindObjectOfType<NPCInt>();
-        
-        if (option.changesFutureDialogue && currentNPC.allowDialogueChanges && option.subsequentDialogue != null)
+        if (option.changesFutureDialogue && currentNPC != null && currentNPC.allowDialogueChanges && option.subsequentDialogue != null)
         {
             currentNPC.UpdateDialogue(option.subsequentDialogue);
         }
         
-        StartDialogue(option.nextDialogue);
+        StartDialogue(option.nextDialogue, currentNPC);
     }
 
     public bool IsDialogueActive()
