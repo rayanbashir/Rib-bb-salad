@@ -16,7 +16,7 @@ public class DoorTeleport : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             if (!isActive) return; // If the door is not active, do nothing
-            StartCoroutine(TeleportPlayer(other.transform, 1f));
+            StartCoroutine(TeleportPlayer(other.transform, 1.3f));
         }
     }
 

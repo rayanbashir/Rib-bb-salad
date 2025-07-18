@@ -13,7 +13,7 @@ public class Interactable : MonoBehaviour
     [SerializeField] private string promptMessage = "Press E to interact";
     
     private bool hasInteracted = false;
-    private bool canInteract = false;
+    public bool canInteract = true;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +34,7 @@ public class Interactable : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             canInteract = true;
-            if (interactionPrompt != null && !hasInteracted)
+            if (!hasInteracted)
             {
                 interactionPrompt.text = promptMessage;
                 interactionPrompt.gameObject.SetActive(true);

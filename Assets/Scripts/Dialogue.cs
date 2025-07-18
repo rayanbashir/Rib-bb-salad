@@ -16,14 +16,14 @@ public class Dialogue
     public bool LockPlayerMovement;
 
     public DialogueOption[] options;
-    public bool hasOptions;
 }
 
 [System.Serializable]
-public class DialogueOption
+    public class DialogueOption
 {
     public string optionText;
     public Dialogue nextDialogue;
     public Dialogue subsequentDialogue; // Dialogue to show on next interaction
     public bool changesFutureDialogue = false; // Flag to control if this option changes future dialogue
 }
+

@@ -94,7 +94,8 @@ public class DialogueManager : MonoBehaviour
             sentences.Enqueue(sentence);
         }
 
-        showingOptions = dialogue.hasOptions;
+        // showingOptions = dialogue.hasOptions;
+        showingOptions = (dialogue.options != null && dialogue.options.Length > 0);
         DisplayNextSentence();
     }
 
@@ -114,6 +115,15 @@ public class DialogueManager : MonoBehaviour
     {
         if (sentences.Count == 0)
         {
+            // if (showingOptions)
+            // {
+            //     ShowOptions();
+            // }
+            // else
+            // {
+            //     EndDialogue();
+            // }
+            // return;
             if (showingOptions)
             {
                 ShowOptions();
