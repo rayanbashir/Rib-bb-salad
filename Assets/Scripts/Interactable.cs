@@ -5,29 +5,23 @@ using TMPro;
 
 public class Interactable : MonoBehaviour
 {
+    [Header("Inventory Item Settings")]
     [SerializeField] private bool isInventoryItem = false;
     [SerializeField] private string itemName = "Item";
-    [SerializeField] private Animator animator;
-    [SerializeField] private string animationTriggerName = "Interact";
-    [SerializeField] private TextMeshProUGUI interactionPrompt;
-    [SerializeField] private string promptMessage = "Press E to interact";
-    
+    [SerializeField] private Sprite icon;
+    [SerializeField] [TextArea] private string description;
+    [SerializeField] private ItemType itemType = ItemType.Generic;
+    [SerializeField] private string clueSource; // For Clue
+    [SerializeField] private string toolType;   // For Tool
+
+    public InventoryManager inventoryManager;
+
     private bool hasInteracted = false;
     public bool canInteract = true;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        // Get animator component if not assigned
-        if (animator == null)
-        {
-            animator = GetComponent<Animator>();
-        }
-        if (interactionPrompt != null)
-        {
-            interactionPrompt.gameObject.SetActive(false);
-        }
-    }
+    public enum ItemType { Generic, Clue, Tool }
+
+    void Start() { }
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -36,8 +30,7 @@ public class Interactable : MonoBehaviour
             canInteract = true;
             if (!hasInteracted)
             {
-                interactionPrompt.text = promptMessage;
-                interactionPrompt.gameObject.SetActive(true);
+                Interact();
             }
         }
     }
@@ -47,10 +40,6 @@ public class Interactable : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             canInteract = false;
-            if (interactionPrompt != null)
-            {
-                interactionPrompt.gameObject.SetActive(false);
-            }
         }
     }
 
@@ -58,21 +47,20 @@ public class Interactable : MonoBehaviour
     {
         if (hasInteracted) return;
 
-        // Play animation if there's an animator
-        if (animator != null)
-        {
-            animator.SetTrigger(animationTriggerName);
-        }
-
-        // Add to inventory if it's an inventory item
         if (isInventoryItem)
         {
-            // Add to inventory
-            InventoryManager.Instance.AddItem(itemName);
-            // Optionally destroy the object
-            if (interactionPrompt != null)
+            // Add the correct item type to inventory
+            switch (itemType)
             {
-                interactionPrompt.gameObject.SetActive(false);
+                case ItemType.Clue:
+                    inventoryManager.AddClue(itemName, clueSource, icon, description);
+                    break;
+                case ItemType.Tool:
+                    inventoryManager.AddTool(itemName, toolType, icon, description);
+                    break;
+                default:
+                    inventoryManager.AddItem(itemName, icon, description);
+                    break;
             }
             Destroy(gameObject);
         }
@@ -80,9 +68,5 @@ public class Interactable : MonoBehaviour
         hasInteracted = true;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    void Update() { }
 }

@@ -15,4 +15,26 @@ public class Item
         this.icon = icon;
         this.description = description;
     }
-} 
+}
+
+public class Clue : Item
+{
+    public string Source;
+
+    public Clue(string name, string source, Sprite icon = null, string description = "")
+        : base(name, icon, description)
+    {
+        this.Source = source;
+    }
+}
+
+public class Tool : Item
+{
+    public string ToolType;
+
+    public Tool(string name, string toolType, Sprite icon = null, string description = "")
+        : base(name, icon, description)
+    {
+        this.ToolType = toolType;
+    }
+}
