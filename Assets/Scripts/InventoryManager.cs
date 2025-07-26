@@ -9,7 +9,7 @@ public class InventoryManager : MonoBehaviour
 
     [Header("Inventory UI References")]
     [SerializeField] private GameObject inventoryUI;
-    [SerializeField] private Transform inventoryContent; // InventoryContent in hierarchy
+    [SerializeField] private Transform content; // Content under InventoryContent/Viewport/Content
     [SerializeField] private GameObject iconPrefab; // Prefab for item icon in inventory
 
     [Header("Selected Item Panel References")]
@@ -18,15 +18,18 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI itemNameText;
     [SerializeField] private TextMeshProUGUI itemDescriptionText;
     [SerializeField] private TextMeshProUGUI itemSourceText;
+    [SerializeField] private TextMeshProUGUI itemAmountText;
 
     private List<Item> inventory = new List<Item>();
     private bool isInventoryOpen = false;
-    private InputAction interactAction;
+    private InputAction inventoryAction;
     public PlayerProgress playerProgress;
 
     private void Awake()
     {
-        interactAction = InputSystem.actions.FindAction("Interact");
+        inventoryAction = InputSystem.actions.FindAction("Inventory");
+        if (inventoryAction != null)
+            inventoryAction.Enable();
 
         // Singleton pattern
         if (Instance == null)
@@ -40,17 +43,38 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    void Update()
+    private void OnEnable()
     {
-        if (interactAction != null && interactAction.WasPressedThisFrame())
-        {
-            ToggleInventory();
-        }
+        if (inventoryAction != null)
+            inventoryAction.performed += OnInventoryPerformed;
+    }
+
+    private void OnDisable()
+    {
+        if (inventoryAction != null)
+            inventoryAction.performed -= OnInventoryPerformed;
+    }
+
+    private void OnInventoryPerformed(InputAction.CallbackContext context)
+    {
+        ToggleInventory();
     }
 
     // Add a generic Item
     public void AddItem(Item item)
     {
+        // Stacking logic
+        if (item.stackable)
+        {
+            var existing = inventory.Find(i => i.itemName == item.itemName && i.stackable);
+            if (existing != null)
+            {
+                existing.stackAmount += item.stackAmount;
+                UpdateInventoryUI();
+                playerProgress?.CollectItem(item.itemName);
+                return;
+            }
+        }
         inventory.Add(item);
         Debug.Log($"Added {item.itemName} to inventory");
         UpdateInventoryUI();
@@ -58,9 +82,16 @@ public class InventoryManager : MonoBehaviour
     }
 
     // Add by name (for legacy support)
-    public void AddItem(string itemName, Sprite icon = null, string description = "")
+    public void AddItem(string itemName, Sprite icon = null, string description = "", int stackAmount = 1, bool stackable = false)
     {
-        Item newItem = new Item(itemName, icon, description);
+        Item newItem = new Item(itemName, icon, description, stackAmount, stackable);
+        AddItem(newItem);
+    }
+
+    // Add a generic item with options
+    public void AddGenericItem(string itemName, Sprite icon = null, string description = "", bool stackable = false, int stackAmount = 1)
+    {
+        Item newItem = new Item(itemName, icon, description, stackAmount, stackable);
         AddItem(newItem);
     }
 
@@ -103,6 +134,15 @@ public class InventoryManager : MonoBehaviour
         isInventoryOpen = !isInventoryOpen;
         inventoryUI.SetActive(isInventoryOpen);
         UpdateInventoryUI();
+
+        // Lock/unlock player movement
+        var player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            var movement = player.GetComponent<Movement>();
+            if (movement != null)
+                movement.enabled = !isInventoryOpen;
+        }
     }
 
     private void UpdateInventoryUI()
@@ -110,7 +150,7 @@ public class InventoryManager : MonoBehaviour
         if (!isInventoryOpen) return;
 
         // Clear existing icons
-        foreach (Transform child in inventoryContent)
+        foreach (Transform child in content)
         {
             Destroy(child.gameObject);
         }
@@ -120,7 +160,7 @@ public class InventoryManager : MonoBehaviour
         {
             int index = i; // local copy for lambda
             Item item = inventory[i];
-            GameObject iconObj = Instantiate(iconPrefab, inventoryContent);
+            GameObject iconObj = Instantiate(iconPrefab, content);
             var iconImage = iconObj.GetComponent<UnityEngine.UI.Image>();
             if (iconImage != null)
                 iconImage.sprite = item.icon;
@@ -157,6 +197,10 @@ public class InventoryManager : MonoBehaviour
                 itemSourceText.text = $"Type: {tool.ToolType}";
             else
                 itemSourceText.text = "";
+        }
+        if (itemAmountText != null)
+        {
+            itemAmountText.text = $"x{item.stackAmount}";
         }
     }
 

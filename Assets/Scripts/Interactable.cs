@@ -11,8 +11,21 @@ public class Interactable : MonoBehaviour
     [SerializeField] private Sprite icon;
     [SerializeField] [TextArea] private string description;
     [SerializeField] private ItemType itemType = ItemType.Generic;
-    [SerializeField] private string clueSource; // For Clue
-    [SerializeField] private string toolType;   // For Tool
+
+    // Useful options for all items
+    [Header("Item Options")]
+    [SerializeField] private bool stackable = false;
+    [SerializeField] private int stackAmount = 1;
+
+    // Clue-specific
+    [Header("Clue Options")]
+    [SerializeField] private string clueSource;
+    [SerializeField] private string clueDetails;
+
+    // Tool-specific
+    [Header("Tool Options")]
+    [SerializeField] private string toolType;
+    [SerializeField] private bool consumable = false;
 
     public InventoryManager inventoryManager;
 
@@ -49,7 +62,6 @@ public class Interactable : MonoBehaviour
 
         if (isInventoryItem)
         {
-            // Add the correct item type to inventory
             switch (itemType)
             {
                 case ItemType.Clue:
