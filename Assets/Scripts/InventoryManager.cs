@@ -18,10 +18,10 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI itemNameText;
     [SerializeField] private TextMeshProUGUI itemDescriptionText;
     [SerializeField] private TextMeshProUGUI itemSourceText;
-    [SerializeField] private TextMeshProUGUI itemAmountText;
 
     private List<Item> inventory = new List<Item>();
     private bool isInventoryOpen = false;
+    private ItemType lastFilter = ItemType.Generic;
     private InputAction inventoryAction;
     public PlayerProgress playerProgress;
 
@@ -63,18 +63,6 @@ public class InventoryManager : MonoBehaviour
     // Add a generic Item
     public void AddItem(Item item)
     {
-        // Stacking logic
-        if (item.stackable)
-        {
-            var existing = inventory.Find(i => i.itemName == item.itemName && i.stackable);
-            if (existing != null)
-            {
-                existing.stackAmount += item.stackAmount;
-                UpdateInventoryUI();
-                playerProgress?.CollectItem(item.itemName);
-                return;
-            }
-        }
         inventory.Add(item);
         Debug.Log($"Added {item.itemName} to inventory");
         UpdateInventoryUI();
@@ -82,16 +70,16 @@ public class InventoryManager : MonoBehaviour
     }
 
     // Add by name (for legacy support)
-    public void AddItem(string itemName, Sprite icon = null, string description = "", int stackAmount = 1, bool stackable = false)
+    public void AddItem(string itemName, Sprite icon = null, string description = "")
     {
-        Item newItem = new Item(itemName, icon, description, stackAmount, stackable);
+        Item newItem = new Item(itemName, icon, description);
         AddItem(newItem);
     }
 
     // Add a generic item with options
-    public void AddGenericItem(string itemName, Sprite icon = null, string description = "", bool stackable = false, int stackAmount = 1)
+    public void AddGenericItem(string itemName, Sprite icon = null, string description = "")
     {
-        Item newItem = new Item(itemName, icon, description, stackAmount, stackable);
+        Item newItem = new Item(itemName, icon, description);
         AddItem(newItem);
     }
 
@@ -133,8 +121,8 @@ public class InventoryManager : MonoBehaviour
     {
         isInventoryOpen = !isInventoryOpen;
         inventoryUI.SetActive(isInventoryOpen);
-        UpdateInventoryUI();
-
+        if (isInventoryOpen)
+            ShowFilteredItems(lastFilter);
         // Lock/unlock player movement
         var player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
@@ -147,6 +135,27 @@ public class InventoryManager : MonoBehaviour
 
     private void UpdateInventoryUI()
     {
+        // On default, show items only
+        ShowFilteredItems(lastFilter);
+    }
+
+    public enum ItemType { All, Generic, Clue, Tool }
+
+    public void ShowItemsOnly() {
+        lastFilter = ItemType.Generic;
+        ShowFilteredItems(ItemType.Generic);
+    }
+    public void ShowCluesOnly() {
+        lastFilter = ItemType.Clue;
+        ShowFilteredItems(ItemType.Clue);
+    }
+    public void ShowToolsOnly() {
+        lastFilter = ItemType.Tool;
+        ShowFilteredItems(ItemType.Tool);
+    }
+
+    private void ShowFilteredItems(ItemType type)
+    {
         if (!isInventoryOpen) return;
 
         // Clear existing icons
@@ -155,11 +164,29 @@ public class InventoryManager : MonoBehaviour
             Destroy(child.gameObject);
         }
 
+        // Filter items
+        List<Item> filtered = new List<Item>();
+        switch (type)
+        {
+            case ItemType.Generic:
+                filtered = inventory.FindAll(i => !(i is Clue) && !(i is Tool));
+                break;
+            case ItemType.Clue:
+                filtered = inventory.FindAll(i => i is Clue);
+                break;
+            case ItemType.Tool:
+                filtered = inventory.FindAll(i => i is Tool);
+                break;
+            default:
+                filtered = new List<Item>(inventory);
+                break;
+        }
+
         // Create new icon entries
-        for (int i = 0; i < inventory.Count; i++)
+        for (int i = 0; i < filtered.Count; i++)
         {
             int index = i; // local copy for lambda
-            Item item = inventory[i];
+            Item item = filtered[i];
             GameObject iconObj = Instantiate(iconPrefab, content);
             var iconImage = iconObj.GetComponent<UnityEngine.UI.Image>();
             if (iconImage != null)
@@ -170,15 +197,35 @@ public class InventoryManager : MonoBehaviour
             if (btn != null)
             {
                 btn.onClick.RemoveAllListeners();
-                btn.onClick.AddListener(() => ShowItemDetails(index));
+                btn.onClick.AddListener(() => ShowFilteredItemDetails(filtered, index));
             }
         }
 
         // Show first item by default if any
-        if (inventory.Count > 0)
-            ShowItemDetails(0);
+        if (filtered.Count > 0)
+            ShowFilteredItemDetails(filtered, 0);
         else
             ClearItemDetails();
+    }
+
+    private void ShowFilteredItemDetails(List<Item> filtered, int index)
+    {
+        if (index < 0 || index >= filtered.Count) { ClearItemDetails(); return; }
+        Item item = filtered[index];
+        if (itemPanel != null) itemPanel.SetActive(true);
+        if (itemImage != null) itemImage.sprite = item.icon;
+        if (itemNameText != null) itemNameText.text = item.itemName;
+        if (itemDescriptionText != null) itemDescriptionText.text = string.IsNullOrEmpty(item.description) ? "" : item.description;
+        if (itemSourceText != null)
+        {
+            if (item is Clue clue)
+                itemSourceText.text = $"Source: {clue.Source}";
+            else if (item is Tool tool)
+                itemSourceText.text = $"Type: {tool.ToolType}";
+            else
+                itemSourceText.text = "";
+        }
+        // Removed itemAmountText
     }
 
     private void ShowItemDetails(int index)
@@ -198,10 +245,7 @@ public class InventoryManager : MonoBehaviour
             else
                 itemSourceText.text = "";
         }
-        if (itemAmountText != null)
-        {
-            itemAmountText.text = $"x{item.stackAmount}";
-        }
+        // Removed itemAmountText
     }
 
     private void ClearItemDetails()

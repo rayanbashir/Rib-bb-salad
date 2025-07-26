@@ -12,10 +12,6 @@ public class Interactable : MonoBehaviour
     [SerializeField] [TextArea] private string description;
     [SerializeField] private ItemType itemType = ItemType.Generic;
 
-    // Useful options for all items
-    [Header("Item Options")]
-    [SerializeField] private bool stackable = false;
-    [SerializeField] private int stackAmount = 1;
 
     // Clue-specific
     [Header("Clue Options")]
