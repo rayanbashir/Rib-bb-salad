@@ -168,11 +168,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7316131609092881463, guid: 20a52513ae84a3941ba67e6a798579e9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 26.67944
+      value: 23.52
       objectReference: {fileID: 0}
     - target: {fileID: 7316131609092881463, guid: 20a52513ae84a3941ba67e6a798579e9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -51.734863
+      value: -53.98
       objectReference: {fileID: 0}
     - target: {fileID: 7316131609092881463, guid: 20a52513ae84a3941ba67e6a798579e9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -944,7 +944,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 36.25
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -980,7 +980,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -37.16033, z: 0, w: 0}
+  m_margin: {x: 0, y: -22.859795, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2399,7 +2399,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 243.3109, y: -39.23}
+  m_AnchoredPosition: {x: 242, y: -28.344}
   m_SizeDelta: {x: -590.1516, y: -154.89}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &471719600
@@ -4019,7 +4019,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3863293477814267586, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
       propertyPath: m_Name
-      value: ItemTemplate
+      value: Sausage
       objectReference: {fileID: 0}
     - target: {fileID: 5021920117307200055, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
       propertyPath: m_Size.x
@@ -4032,7 +4032,7 @@ PrefabInstance:
     - target: {fileID: 5021920117307200055, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 4ca54f944b1e7814da838d5db7ff123d, type: 3}
+      objectReference: {fileID: 21300000, guid: 9a1e3aa509f1345479aafcd0157ebb09, type: 3}
     - target: {fileID: 5021920117307200055, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
       propertyPath: m_SortingLayer
       value: 1
@@ -4046,17 +4046,31 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7229447141708904033, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 9a1e3aa509f1345479aafcd0157ebb09, type: 3}
+    - target: {fileID: 7229447141708904033, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
       propertyPath: itemName
-      value: Suspicious Leaf
+      value: Sausage
       objectReference: {fileID: 0}
     - target: {fileID: 7229447141708904033, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
       propertyPath: itemType
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7229447141708904033, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: description
+      value: A sausage, most likely from "Giovanni Porco's Sausageria," well known
+        within the city for their vegan sausages. Seems that the person who bought
+        it was suddenly unable to finish for some reason.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229447141708904033, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
       propertyPath: isInventoryItem
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7229447141708904033, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: inventoryManager
+      value: 
+      objectReference: {fileID: 1550195930}
     - target: {fileID: 8605021380160203992, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.24393283
@@ -4071,11 +4085,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8605021380160203992, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 28.734331
+      value: 30.8
       objectReference: {fileID: 0}
     - target: {fileID: 8605021380160203992, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -54.428505
+      value: -54.74
       objectReference: {fileID: 0}
     - target: {fileID: 8605021380160203992, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4272,11 +4286,11 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20.35
+  m_fontSize: 28.95
   m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
+  m_fontSizeMin: 12
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
@@ -4308,7 +4322,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -3.3781586, y: 1.5581875, z: 0.00013735825, w: -21.23465}
+  m_margin: {x: -3.3781586, y: 1.5581875, z: 0.00013735825, w: -51.131786}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -4592,7 +4606,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6028419995116634893, guid: 20a52513ae84a3941ba67e6a798579e9, type: 3}
       propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[0].optionText
-      value: I found the weapon
+      value: I found some evidence
       objectReference: {fileID: 0}
     - target: {fileID: 6028419995116634893, guid: 20a52513ae84a3941ba67e6a798579e9, type: 3}
       propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[0].consumeRequiredItem
@@ -6116,6 +6130,131 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1001 &1231490197
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 754101998181784278, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: m_Radius
+      value: 1.58
+      objectReference: {fileID: 0}
+    - target: {fileID: 3863293477814267586, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: m_Name
+      value: Used Cigar
+      objectReference: {fileID: 0}
+    - target: {fileID: 5021920117307200055, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: m_Size.x
+      value: 3.42
+      objectReference: {fileID: 0}
+    - target: {fileID: 5021920117307200055, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: m_Size.y
+      value: 3.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 5021920117307200055, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5e4e82252a4e8c84aa023c890fc39a78, type: 3}
+    - target: {fileID: 5021920117307200055, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5021920117307200055, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 185128879
+      objectReference: {fileID: 0}
+    - target: {fileID: 5021920117307200055, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229447141708904033, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 5e4e82252a4e8c84aa023c890fc39a78, type: 3}
+    - target: {fileID: 7229447141708904033, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: itemName
+      value: Used Cigar
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229447141708904033, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: itemType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229447141708904033, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: clueSource
+      value: Murder scene
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229447141708904033, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: canInteract
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229447141708904033, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: clueDetails
+      value: give to the officer
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229447141708904033, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: description
+      value: A used cigar. Members of the meowfia are often seen smoking these.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229447141708904033, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: inventoryManager
+      value: 
+      objectReference: {fileID: 1550195930}
+    - target: {fileID: 8605021380160203992, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8605021380160203992, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8605021380160203992, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 33.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 8605021380160203992, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -48.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 8605021380160203992, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8605021380160203992, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8605021380160203992, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8605021380160203992, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8605021380160203992, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8605021380160203992, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8605021380160203992, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8605021380160203992, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3b994bea9e07fa64daeb2593adb4a501, type: 3}
 --- !u!1001 &1271117918
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6807,8 +6946,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000020504, y: -140}
-  m_SizeDelta: {x: 188.7, y: 46.4652}
+  m_AnchoredPosition: {x: -0.000019222, y: -173}
+  m_SizeDelta: {x: 187.9334, y: 46.4652}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1459280327
 MonoBehaviour:
@@ -27242,3 +27381,4 @@ SceneRoots:
   - {fileID: 937644721}
   - {fileID: 35484582}
   - {fileID: 2119481935}
+  - {fileID: 1231490197}
