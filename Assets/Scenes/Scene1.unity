@@ -639,8 +639,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.4742788, y: 2.372116}
-  m_SizeDelta: {x: 200, y: 30}
+  m_AnchoredPosition: {x: 0.0000019073, y: 0}
+  m_SizeDelta: {x: 232.1982, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &101162230
 MonoBehaviour:
@@ -3344,10 +3344,6 @@ MonoBehaviour:
   - {fileID: 101162230}
   - {fileID: 1647480417}
   playerProgress: {fileID: 1825269011}
-  bustsContainer: {fileID: 1112742747}
-  leftBustImage: {fileID: 1650841694}
-  rightBustImage: {fileID: 231017350}
-  bustFadeSpeed: 5
 --- !u!4 &729401558
 Transform:
   m_ObjectHideFlags: 0
@@ -3785,9 +3781,6 @@ MonoBehaviour:
   dialogueManager: {fileID: 729401557}
   startingDialogue:
     name: voice in the sky
-    showBusts: 0
-    leftBust: {fileID: 0}
-    rightBust: {fileID: 0}
     sentences:
     - helo and welcome to this game
     - wasd or arrow keys to mvoe
@@ -6164,12 +6157,240 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 729401557}
     - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.LockPlayerMovement
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[2].optionText
+      value: ask about mustard
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[2].requiredClue
+      value: suspicious yellow stain
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[2].nextDialogue.name
+      value: John Pork
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[2].changesFutureDialogue
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[2].nextDialogue.leftBust
+      value: 
+      objectReference: {fileID: 21300000, guid: 7ba2cb3b88fecc7429435b10f7666fc7, type: 3}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[2].nextDialogue.rightBust
+      value: 
+      objectReference: {fileID: 21300000, guid: f1bdac8dbaef4b542a03b08568c806cb, type: 3}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[2].nextDialogue.showBusts
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
       propertyPath: dialogue.options.Array.data[0].subsequentDialogue.name
       value: John Pork
       objectReference: {fileID: 0}
     - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[2].subsequentDialogue.name
+      value: John Pork
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[2].subsequentDialogue.leftBust
+      value: 
+      objectReference: {fileID: 21300000, guid: 7ba2cb3b88fecc7429435b10f7666fc7, type: 3}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[2].subsequentDialogue.rightBust
+      value: 
+      objectReference: {fileID: 21300000, guid: f1bdac8dbaef4b542a03b08568c806cb, type: 3}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[2].subsequentDialogue.showBusts
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[2].nextDialogue.options.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[2].nextDialogue.sentences.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[2].nextDialogue.sentences.Array.data[0]
+      value: yeah i was eating a sausage with mustard on it
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[2].subsequentDialogue.LockPlayerMovement
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[2].subsequentDialogue.sentences.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[2].subsequentDialogue.sentences.Array.data[0]
+      value: You will never be my friend
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[2].subsequentDialogue.sentences.Array.data[1]
+      value: You will never be my friend
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[2].nextDialogue.options.Array.data[0].optionText
+      value: thats cannibalism
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[2].nextDialogue.options.Array.data[1].optionText
+      value: clean up next time
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[2].optionText
+      value: want a mango
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[2].nextDialogue.options.Array.data[0].nextDialogue.name
+      value: John Pork
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[2].nextDialogue.options.Array.data[1].nextDialogue.name
+      value: John Pork
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[2].requiredItem
+      value: Mango
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[2].nextDialogue.name
+      value: John Pork
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[2].consumeRequiredItem
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[2].changesFutureDialogue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
       propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[1].subsequentDialogue.name
       value: John Pork
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[2].subsequentDialogue.name
+      value: John Pork
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[2].nextDialogue.options.Array.data[0].nextDialogue.sentences.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[2].nextDialogue.options.Array.data[1].nextDialogue.sentences.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[2].nextDialogue.options.Array.data[0].nextDialogue.sentences.Array.data[0]
+      value: it was a vegan sausage
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[2].nextDialogue.options.Array.data[1].nextDialogue.sentences.Array.data[0]
+      value: nah i do what i want
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[2].nextDialogue.sentences.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[2].nextDialogue.sentences.Array.data[0]
+      value: thanks bro i will never forget this. this is why ur my friend
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[2].subsequentDialogue.LockPlayerMovement
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[2].subsequentDialogue.options.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[2].subsequentDialogue.sentences.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[2].subsequentDialogue.sentences.Array.data[0]
+      value: hello friend i am calling
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[2].subsequentDialogue.sentences.Array.data[1]
+      value: will you accept or decline?
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[2].subsequentDialogue.options.Array.data[0].optionText
+      value: accept
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[2].subsequentDialogue.options.Array.data[1].optionText
+      value: decline
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[2].subsequentDialogue.options.Array.data[0].nextDialogue.name
+      value: John Pork
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[2].subsequentDialogue.options.Array.data[1].nextDialogue.name
+      value: John Pork
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[2].subsequentDialogue.options.Array.data[1].changesFutureDialogue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[2].subsequentDialogue.options.Array.data[1].subsequentDialogue.name
+      value: John Pork
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[2].subsequentDialogue.options.Array.data[1].nextDialogue.LockPlayerMovement
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[2].subsequentDialogue.options.Array.data[0].nextDialogue.sentences.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[2].subsequentDialogue.options.Array.data[1].nextDialogue.sentences.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[2].subsequentDialogue.options.Array.data[0].nextDialogue.sentences.Array.data[0]
+      value: ty friend i knew i could always count on you
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[2].subsequentDialogue.options.Array.data[1].nextDialogue.sentences.Array.data[0]
+      value: ...
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[2].subsequentDialogue.options.Array.data[1].nextDialogue.sentences.Array.data[1]
+      value: Wow.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[2].subsequentDialogue.options.Array.data[1].subsequentDialogue.LockPlayerMovement
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[2].subsequentDialogue.options.Array.data[1].subsequentDialogue.sentences.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288455238469382108, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[2].subsequentDialogue.options.Array.data[1].subsequentDialogue.sentences.Array.data[0]
+      value: ...
       objectReference: {fileID: 0}
     - target: {fileID: 6049257775198121927, guid: cd558cb785a51c44eb24c9b83d17252d, type: 3}
       propertyPath: m_Name
@@ -14022,8 +14243,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.4742788, y: -32.4189}
-  m_SizeDelta: {x: 200, y: 30}
+  m_AnchoredPosition: {x: 116.1, y: 0}
+  m_SizeDelta: {x: 232.1982, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1647480417
 MonoBehaviour:
@@ -14562,8 +14783,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 178, y: -264}
-  m_SizeDelta: {x: 1215.8083, y: 146.1265}
+  m_AnchoredPosition: {x: 187.1031, y: -264.82755}
+  m_SizeDelta: {x: 1236.5854, y: 144.2377}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1799711085
 MonoBehaviour:
@@ -14648,7 +14869,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 337.1175, w: 0}
+  m_margin: {x: 0, y: 0, z: -2.868744, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -15015,8 +15236,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.4742788, y: 34.79103}
-  m_SizeDelta: {x: 200, y: 30}
+  m_AnchoredPosition: {x: -116.6367, y: 0.5518}
+  m_SizeDelta: {x: 232.1982, y: 28.6037}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1837702504
 MonoBehaviour:
@@ -20925,8 +21146,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 587.85254, y: -238.31396}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 194.19275, y: -81.41082}
+  m_SizeDelta: {x: 350.4502, y: 34.6546}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2053548528
 MonoBehaviour:
