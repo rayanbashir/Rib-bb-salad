@@ -4586,6 +4586,18 @@ PrefabInstance:
       value: 'Alright. Go look for some clues that''ll help solve the case. There''s
         also a witness: feel free to question her.'
       objectReference: {fileID: 0}
+    - target: {fileID: 6028419995116634893, guid: 20a52513ae84a3941ba67e6a798579e9, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6028419995116634893, guid: 20a52513ae84a3941ba67e6a798579e9, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[0].optionText
+      value: I found the weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 6028419995116634893, guid: 20a52513ae84a3941ba67e6a798579e9, type: 3}
+      propertyPath: dialogue.options.Array.data[0].subsequentDialogue.options.Array.data[0].consumeRequiredItem
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6159697840704800604, guid: 20a52513ae84a3941ba67e6a798579e9, type: 3}
       propertyPath: m_Sprite
       value: 
