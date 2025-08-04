@@ -17,6 +17,20 @@ public class NPCInt : MonoBehaviour
     public bool allowDialogueChanges = false; // Toggle for dialogue change feature
     public bool oneTimeOnly = false; // Toggle to allow only one conversation
     private bool hasSpokenOnce = false; // Track if player has already spoken to this NPC
+    
+    [Header("Item Reward System")]
+    public bool givesItemAfterDialogue = false; // Toggle to give item after dialogue
+    public string itemToGive = ""; // Name of item to give
+    public Sprite itemIcon; // Icon for the item
+    [TextArea(2,4)]
+    public string itemDescription = ""; // Description of the item
+    public ItemRewardType itemType = ItemRewardType.Generic; // Type of item to give
+    public string itemSource = ""; // Source for clues
+    public string toolType = ""; // Tool type for tools
+    private bool hasGivenItem = false; // Track if item has been given
+    
+    public enum ItemRewardType { Generic, Clue, Tool }
+    
     private Dialogue defaultDialogue; // Store the original dialogue
     public bool isInDialogue = false;
     private InputAction interactAction;
@@ -105,6 +119,20 @@ public class NPCInt : MonoBehaviour
         Debug.Log("Reset one-time interaction for " + gameObject.name);
     }
 
+    public void ResetItemReward()
+    {
+        hasGivenItem = false;
+        Debug.Log("Reset item reward for " + gameObject.name);
+    }
+
+    public void ResetAll()
+    {
+        ResetDialogue();
+        ResetOneTimeInteraction();
+        ResetItemReward();
+        Debug.Log("Reset all states for " + gameObject.name);
+    }
+
     public void TriggerDialogue()
     {
         isInDialogue = true;
@@ -119,6 +147,12 @@ public class NPCInt : MonoBehaviour
             hasSpokenOnce = true;
         }
         
+        // Give item after dialogue if enabled and not already given
+        if (givesItemAfterDialogue && !hasGivenItem && !string.IsNullOrEmpty(itemToGive))
+        {
+            StartCoroutine(GiveItemAfterDialogue());
+        }
+        
         dialogueManager.StartDialogue(currentDialogue, this);
         Debug.Log("Triggered dialogue with " + gameObject.name);
     }
@@ -127,6 +161,50 @@ public class NPCInt : MonoBehaviour
     {
         yield return new WaitForSeconds(0.3f);
         TriggerDialogue();
+    }
+
+    private IEnumerator GiveItemAfterDialogue()
+    {
+        // Wait for dialogue to end
+        while (dialogueManager.IsDialogueActive())
+        {
+            yield return null;
+        }
+        
+        // Give the item
+        GiveItemToPlayer();
+    }
+
+    private void GiveItemToPlayer()
+    {
+        if (hasGivenItem || string.IsNullOrEmpty(itemToGive))
+            return;
+
+        InventoryManager inventoryManager = InventoryManager.Instance;
+        if (inventoryManager == null)
+        {
+            Debug.LogError("InventoryManager not found!");
+            return;
+        }
+
+        // Add item based on type
+        switch (itemType)
+        {
+            case ItemRewardType.Clue:
+                inventoryManager.AddClue(itemToGive, itemSource, itemIcon, itemDescription);
+                Debug.Log($"NPC {gameObject.name} gave clue: {itemToGive}");
+                break;
+            case ItemRewardType.Tool:
+                inventoryManager.AddTool(itemToGive, toolType, itemIcon, itemDescription);
+                Debug.Log($"NPC {gameObject.name} gave tool: {itemToGive}");
+                break;
+            default:
+                inventoryManager.AddItem(itemToGive, itemIcon, itemDescription);
+                Debug.Log($"NPC {gameObject.name} gave item: {itemToGive}");
+                break;
+        }
+
+        hasGivenItem = true;
     }
 }
 

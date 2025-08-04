@@ -28,6 +28,8 @@ public class DialogueOption
     public string requiredClue; // Name of clue required for this option to appear
     [Tooltip("If true, the required item will be consumed (removed from inventory) when this option is selected.")]
     public bool consumeRequiredItem = false;
+    [Tooltip("If true, the required clue will be consumed (removed from inventory) when this option is selected.")]
+    public bool consumeRequiredClue = false;
 }
 
 

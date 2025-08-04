@@ -199,6 +199,12 @@ public class DialogueManager : MonoBehaviour
             InventoryManager.Instance.RemoveItemByName(option.requiredItem);
         }
 
+        // Consume required clue if needed
+        if (!string.IsNullOrEmpty(option.requiredClue) && option.consumeRequiredClue)
+        {
+            InventoryManager.Instance.RemoveItemByName(option.requiredClue);
+        }
+
         if (option.changesFutureDialogue && currentNPC != null && currentNPC.allowDialogueChanges && option.subsequentDialogue != null)
         {
             currentNPC.UpdateDialogue(option.subsequentDialogue);
