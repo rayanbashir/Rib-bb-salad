@@ -6,6 +6,9 @@ using UnityEngine.UI; // At the top if not already
 
 public class LockpickGame : MonoBehaviour
 {
+    private bool movementCancelEnabled = false;
+    private InputAction movementAction;
+    public float movementCancelThreshold = 0.2f; // How much movement cancels the minigame
 
     [SerializeField] private Canvas joystick;
     public GameObject panel;        // Assign in inspector
@@ -37,10 +40,34 @@ public class LockpickGame : MonoBehaviour
         greenZone.anchoredPosition = new Vector2(Random.Range(-bar.rect.width / 2, bar.rect.width / 2), greenZone.anchoredPosition.y);
         pointerSpeed = defaultPointerSpeed;
         greenZone.sizeDelta = new Vector2(greenZoneSize, greenZone.sizeDelta.y); // Reset size
+
+        // Lock player movement for 1 second
+        var player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            var movement = player.GetComponent<Movement>();
+            if (movement != null)
+            {
+                movement.canMove = false;
+                StartCoroutine(EnableMovementCancelAfterDelay(movement, 1f));
+            }
+        }
+        movementCancelEnabled = false;
+    }
+
+    private IEnumerator EnableMovementCancelAfterDelay(Movement movement, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (movement != null)
+            movement.canMove = true;
+        movementCancelEnabled = true;
     }
 
     void OnEnable()
     {
+        movementAction = InputSystem.actions.FindAction("Movement");
+        if (movementAction != null)
+            movementAction.Enable();
         interactAction = InputSystem.actions.FindAction("Interact");
         if (interactAction != null)
             interactAction.Enable();
@@ -48,12 +75,23 @@ public class LockpickGame : MonoBehaviour
 
     void OnDisable()
     {
+        if (movementAction != null)
+            movementAction.Disable();
         if (interactAction != null)
             interactAction.Disable();
     }
 
     void Update()
     {
+        // Cancel lockpick if player moves too much (after initial lock period)
+        if (gameActive && movementCancelEnabled && movementAction != null && movementAction.ReadValue<Vector2>().magnitude > movementCancelThreshold)
+        {
+            Debug.Log("Lockpick minigame cancelled due to player movement.");
+            gameActive = false;
+            panel.SetActive(false);
+            joystick.enabled = true;
+            return;
+        }
         if (!gameActive)
         {
             panel.SetActive(false);

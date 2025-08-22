@@ -15,7 +15,6 @@ public class DialogueManager : MonoBehaviour
     public Movement playerMovement;
     public Animator animator;
     public GameObject optionsPanel;
-    [SerializeField] private Canvas joystick;
     public Button[] optionButtons;
     private bool showingOptions = false;
 
@@ -41,7 +40,6 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue, NPCInt npc)
     {
-        joystick.enabled = false;
         Debug.Log(dialogue.sentences[0]);
         currentDialogue = dialogue;
         currentNPC = npc; // Track which NPC started this dialogue
@@ -122,7 +120,6 @@ public class DialogueManager : MonoBehaviour
 
 
         playerProgress.TalkToNPC(currentDialogue.name);
-        joystick.enabled = true;
         Debug.Log("End of conversation");
         animator.SetBool("IsOpen", false);
         optionsPanel.SetActive(false);

@@ -10,14 +10,70 @@ public class DoorTeleport : MonoBehaviour
     public Animator animator;
 
     public bool isActive = true; // Flag to check if the door is active
+    public bool isLocked = false; // If true, requires lockpick minigame
 
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
             if (!isActive) return; // If the door is not active, do nothing
+
+            if (isLocked)
+            {
+                // Check if player has lockpick tool
+                // Assume lockpick tool type is "Lockpick" (change if needed)
+                bool hasLockpick = false;
+                var inventory = InventoryManager.Instance;
+                if (inventory != null)
+                {
+                    // Look for a Tool with ToolType == "Lockpick"
+                    hasLockpick = inventoryHasLockpick();
+                }
+                if (hasLockpick)
+                {
+                    // Start lockpick minigame
+                    LockpickGame lockpickGame = FindObjectOfType<LockpickGame>();
+                    if (lockpickGame != null)
+                    {
+                        lockpickGame.StartGame();
+                    }
+                    else
+                    {
+                        Debug.LogWarning("No LockpickGame found in scene!");
+                    }
+                }
+                else
+                {
+                    // Show dialogue: Door is locked
+                    DialogueManager dialogueManager = FindObjectOfType<DialogueManager>();
+                    if (dialogueManager != null)
+                    {
+                        Dialogue lockedDialogue = new Dialogue {
+                            name = "",
+                            sentences = new string[] { "Door is locked" },
+                            LockPlayerMovement = true
+                        };
+                        dialogueManager.StartDialogue(lockedDialogue);
+                    }
+                    else
+                    {
+                        Debug.Log("Player needs a lockpick tool to open this door.");
+                    }
+                }
+                return;
+            }
+
             StartCoroutine(TeleportPlayer(other.transform, 1.3f));
         }
+    }
+
+    // Helper to check for lockpick tool in inventory
+    private bool inventoryHasLockpick()
+    {
+        var inventory = InventoryManager.Instance;
+        if (inventory == null) return false;
+        // Use HasItem with the lockpick tool's itemName (assumed "Lockpick")
+        return inventory.HasItem("Lockpick");
     }
 
     IEnumerator TeleportPlayer(Transform player, float delayTime)
