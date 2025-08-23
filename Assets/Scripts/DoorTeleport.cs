@@ -16,25 +16,23 @@ public class DoorTeleport : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            if (!isActive) return; // If the door is not active, do nothing
+            if (!isActive) return;
 
             if (isLocked)
             {
-                // Check if player has lockpick tool
-                // Assume lockpick tool type is "Lockpick" (change if needed)
                 bool hasLockpick = false;
                 var inventory = InventoryManager.Instance;
                 if (inventory != null)
                 {
-                    // Look for a Tool with ToolType == "Lockpick"
                     hasLockpick = inventoryHasLockpick();
                 }
                 if (hasLockpick)
                 {
-                    // Start lockpick minigame
                     LockpickGame lockpickGame = FindObjectOfType<LockpickGame>();
                     if (lockpickGame != null)
                     {
+                        // Subscribe to success event
+                        lockpickGame.OnLockpickSuccess += UnlockDoor;
                         lockpickGame.StartGame();
                     }
                     else
@@ -44,7 +42,6 @@ public class DoorTeleport : MonoBehaviour
                 }
                 else
                 {
-                    // Show dialogue: Door is locked
                     DialogueManager dialogueManager = FindObjectOfType<DialogueManager>();
                     if (dialogueManager != null)
                     {
@@ -65,6 +62,14 @@ public class DoorTeleport : MonoBehaviour
 
             StartCoroutine(TeleportPlayer(other.transform, 1.3f));
         }
+    }
+
+    // Unlocks the door when lockpick game is successful
+    private void UnlockDoor()
+    {
+        isLocked = false;
+        Debug.Log("Door unlocked!");
+        // Optionally, you can teleport the player here or trigger other effects
     }
 
     // Helper to check for lockpick tool in inventory

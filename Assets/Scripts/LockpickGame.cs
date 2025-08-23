@@ -6,6 +6,9 @@ using UnityEngine.UI; // At the top if not already
 
 public class LockpickGame : MonoBehaviour
 {
+    // Event for successful lockpick
+    public event System.Action OnLockpickSuccess;
+
     private bool movementCancelEnabled = false;
     private InputAction movementAction;
     public float movementCancelThreshold = 0.2f; // How much movement cancels the minigame
@@ -87,6 +90,8 @@ public class LockpickGame : MonoBehaviour
         if (gameActive && movementCancelEnabled && movementAction != null && movementAction.ReadValue<Vector2>().magnitude > movementCancelThreshold)
         {
             Debug.Log("Lockpick minigame cancelled due to player movement.");
+            attempts = 0;
+            ResetAttemptCircles();
             gameActive = false;
             panel.SetActive(false);
             joystick.enabled = true;
@@ -130,9 +135,10 @@ public class LockpickGame : MonoBehaviour
                 if (attempts >= attemptsRequired)
                 {
                     Debug.Log("Lockpick minigame complete!");
-                    // Trigger win logic here
                     gameActive = false;
                     joystick.enabled = true;
+                    // Fire success event for door
+                    OnLockpickSuccess?.Invoke();
                 }
                 else
                 {
@@ -186,4 +192,3 @@ public class LockpickGame : MonoBehaviour
     }
 }
 
-   
