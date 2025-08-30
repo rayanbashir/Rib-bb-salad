@@ -507,7 +507,7 @@ public class GruntScript : MonoBehaviour
                         patrolDir *= -1; // flip direction
                     }
                     // Face next direction
-                    FaceDirection((from - to).normalized);
+
                     // Do not change lastAngle (no movement) to mirror player logic
                 }
                 else
