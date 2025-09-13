@@ -9,7 +9,7 @@ public class LockerScript : MonoBehaviour
     public Animator markAnimator;
     private bool canInteract = false;
     private bool isPlayerInLocker = false;
-    private GameObject player;
+    public GameObject player;
     private Collider2D playerCollider;
     private SpriteRenderer playerSprite;
     private Animator playerAnimator;
@@ -70,17 +70,21 @@ public class LockerScript : MonoBehaviour
         }
     }
 
+    private bool isHidingCoroutineRunning = false;
+    private bool isShowingCoroutineRunning = false;
+
     private void InteractLocker()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        if (player == null) return;
-
         playerCollider = player.GetComponent<Collider2D>();
         playerSprite = player.GetComponent<SpriteRenderer>();
         playerAnimator = player.GetComponent<Animator>();
 
+        if (playerCollider == null) Debug.LogWarning("LockerScript: Player Collider2D not found!");
+        if (playerSprite == null) Debug.LogWarning("LockerScript: Player SpriteRenderer not found!");
+
         if (lockerAnimator != null) lockerAnimator.SetTrigger(enterLockerTrigger);
-        StartCoroutine(HidePlayerAfterDelay(0.5f));
+        if (!isHidingCoroutineRunning)
+            StartCoroutine(HidePlayerAfterDelay(0.5f));
 
         isPlayerInLocker = true;
         if (interactMark != null)
@@ -89,18 +93,32 @@ public class LockerScript : MonoBehaviour
 
     private IEnumerator HidePlayerAfterDelay(float delay)
     {
+        isHidingCoroutineRunning = true;
         yield return new WaitForSeconds(delay);
-        if (playerCollider != null) playerCollider.enabled = false;
-        if (playerSprite != null) playerSprite.enabled = false;
-        // Disable movement via Movement script
+        if (playerCollider != null)
+        {
+            playerCollider.enabled = false;
+            Debug.Log("LockerScript: Player collider disabled.");
+        }
+        if (playerSprite != null)
+        {
+            playerSprite.enabled = false;
+            Debug.Log("LockerScript: Player sprite disabled.");
+        }
         var movement = player != null ? player.GetComponent<Movement>() : null;
-        if (movement != null) movement.canMove = false;
+        if (movement != null)
+        {
+            movement.canMove = false;
+            Debug.Log("LockerScript: Player movement disabled.");
+        }
+        isHidingCoroutineRunning = false;
     }
 
     private void ExitLocker()
     {
         if (lockerAnimator != null) lockerAnimator.SetTrigger(exitLockerTrigger);
-        StartCoroutine(ShowPlayerAfterDelay(0.5f));
+        if (!isShowingCoroutineRunning)
+            StartCoroutine(ShowPlayerAfterDelay(0.5f));
         isPlayerInLocker = false;
         if (canInteract && interactMark != null)
             interactMark.SetActive(true);
@@ -108,12 +126,25 @@ public class LockerScript : MonoBehaviour
 
     private IEnumerator ShowPlayerAfterDelay(float delay)
     {
+        isShowingCoroutineRunning = true;
         yield return new WaitForSeconds(delay);
-        if (playerCollider != null) playerCollider.enabled = true;
-        if (playerSprite != null) playerSprite.enabled = true;
-        // Re-enable movement via Movement script
+        if (playerCollider != null)
+        {
+            playerCollider.enabled = true;
+            Debug.Log("LockerScript: Player collider enabled.");
+        }
+        if (playerSprite != null)
+        {
+            playerSprite.enabled = true;
+            Debug.Log("LockerScript: Player sprite enabled.");
+        }
         var movement = player != null ? player.GetComponent<Movement>() : null;
-        if (movement != null) movement.canMove = true;
+        if (movement != null)
+        {
+            movement.canMove = true;
+            Debug.Log("LockerScript: Player movement enabled.");
+        }
+        isShowingCoroutineRunning = false;
     }
 
     private bool PlayerIsTryingToMove()

@@ -52,7 +52,7 @@ public class Interactable : MonoBehaviour
         }
     }
 
-    public virtual void Interact()
+    public void Interact()
     {
         if (hasInteracted) return;
 
