@@ -4317,11 +4317,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2340819423270628830, guid: be95de2cd6d8c26419228f742ac0a81f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -37.75
+      value: -36.993
       objectReference: {fileID: 0}
     - target: {fileID: 2340819423270628830, guid: be95de2cd6d8c26419228f742ac0a81f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2340819423270628830, guid: be95de2cd6d8c26419228f742ac0a81f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4360,6 +4360,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3682197327706373122, guid: be95de2cd6d8c26419228f742ac0a81f, type: 3}
+      propertyPath: sceneName
+      value: Stealth
+      objectReference: {fileID: 0}
+    - target: {fileID: 3682197327706373122, guid: be95de2cd6d8c26419228f742ac0a81f, type: 3}
       propertyPath: destination
       value: 
       objectReference: {fileID: 384540582}
@@ -4367,6 +4371,14 @@ PrefabInstance:
       propertyPath: playerMovement
       value: 
       objectReference: {fileID: 947469790}
+    - target: {fileID: 3682197327706373122, guid: be95de2cd6d8c26419228f742ac0a81f, type: 3}
+      propertyPath: loadSceneInstead
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4457590197200225482, guid: be95de2cd6d8c26419228f742ac0a81f, type: 3}
+      propertyPath: m_SpriteSortPoint
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5945771239251097997, guid: be95de2cd6d8c26419228f742ac0a81f, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.75
@@ -4377,7 +4389,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7547539345109088746, guid: be95de2cd6d8c26419228f742ac0a81f, type: 3}
       propertyPath: m_Offset.y
-      value: 0.75200653
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -31547,7 +31559,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 0
-      m_TileSpriteIndex: 0
+      m_TileSpriteIndex: 8
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -35178,8 +35190,8 @@ Tilemap:
   - m_RefCount: 8
     m_Data: {fileID: 11400000, guid: 3136ff5e17737d6439a4aa37ed1e6b4c, type: 2}
   m_TileSpriteArray:
-  - m_RefCount: 1
-    m_Data: {fileID: 536683195, guid: 1b0dd67484a9bfb428da492e97d0ac53, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 2
     m_Data: {fileID: 179193660, guid: 1b0dd67484a9bfb428da492e97d0ac53, type: 3}
   - m_RefCount: 2
@@ -35194,8 +35206,8 @@ Tilemap:
     m_Data: {fileID: 600625924, guid: 1b0dd67484a9bfb428da492e97d0ac53, type: 3}
   - m_RefCount: 20
     m_Data: {fileID: 1579940327, guid: 1b0dd67484a9bfb428da492e97d0ac53, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 536683195, guid: 1b0dd67484a9bfb428da492e97d0ac53, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -1659875405, guid: 5825083c420664746b53eedc5164e205, type: 3}
   - m_RefCount: 2

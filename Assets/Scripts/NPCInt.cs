@@ -20,6 +20,8 @@ public class NPCInt : MonoBehaviour
     
     [Header("Item Reward System")]
     public bool givesItemAfterDialogue = false; // Toggle to give item after dialogue
+    [Tooltip("If set, the item will only be given after the dialogue with this Name finishes (e.g., the one reached after selecting a specific option). Leave empty to give after the next dialogue end.")]
+    public string itemRewardDialogueName; // Name of the dialogue that triggers the reward
     public string itemToGive = ""; // Name of item to give
     public Sprite itemIcon; // Icon for the item
     [TextArea(2,4)]
@@ -146,13 +148,7 @@ public class NPCInt : MonoBehaviour
         {
             hasSpokenOnce = true;
         }
-        
-        // Give item after dialogue if enabled and not already given
-        if (givesItemAfterDialogue && !hasGivenItem && !string.IsNullOrEmpty(itemToGive))
-        {
-            StartCoroutine(GiveItemAfterDialogue());
-        }
-        
+
         dialogueManager.StartDialogue(currentDialogue, this);
         Debug.Log("Triggered dialogue with " + gameObject.name);
     }
@@ -161,18 +157,6 @@ public class NPCInt : MonoBehaviour
     {
         yield return new WaitForSeconds(0.3f);
         TriggerDialogue();
-    }
-
-    private IEnumerator GiveItemAfterDialogue()
-    {
-        // Wait for dialogue to end
-        while (dialogueManager.IsDialogueActive())
-        {
-            yield return null;
-        }
-        
-        // Give the item
-        GiveItemToPlayer();
     }
 
     private void GiveItemToPlayer()
@@ -205,6 +189,33 @@ public class NPCInt : MonoBehaviour
         }
 
         hasGivenItem = true;
+    }
+
+    // Called by DialogueManager when a dialogue starts for this NPC
+    public void OnDialogueStarted(Dialogue startedDialogue)
+    {
+        // No-op for now; left for future use if we want to trigger on start
+    }
+
+    // Called by DialogueManager when a dialogue ends for this NPC
+    public void OnDialogueEnded(Dialogue endedDialogue)
+    {
+        if (!givesItemAfterDialogue || hasGivenItem || string.IsNullOrEmpty(itemToGive))
+            return;
+
+        // If a specific dialogue is set, only give after that dialogue ends
+        if (!string.IsNullOrEmpty(itemRewardDialogueName))
+        {
+            if (endedDialogue != null && endedDialogue.name == itemRewardDialogueName)
+            {
+                GiveItemToPlayer();
+            }
+        }
+        else
+        {
+            // Backward-compat: if no specific dialogue set, give after the next dialogue that ends
+            GiveItemToPlayer();
+        }
     }
 }
 

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 public class DoorTeleport : MonoBehaviour
 {
     public Transform destination;    // The destination transform where player will teleport
@@ -12,11 +13,55 @@ public class DoorTeleport : MonoBehaviour
     public bool isActive = true; // Flag to check if the door is active
     public bool isLocked = false; // If true, requires lockpick minigame
 
+    [Header("Scene Load Option")]
+    public bool loadSceneInstead = false; // If true, load a scene instead of teleporting
+    public string sceneName;              // Scene to load when using scene load option
+    public float transitionDelay = 1.3f;  // Delay before teleport/scene load (matches fade)
+
+    [Header("Item Requirement (separate from lockpick)")]
+    public bool requiresItem = false;     // If true, requires an item to use the door
+    public string requiredItemName;       // Name of the required item
+    public bool consumeRequiredItem = false; // If true, remove the item on use
+
+    // Internals to continue action after lockpick
+    private Transform pendingPlayer;
+    private LockpickGame currentLockpickGame;
+
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
             if (!isActive) return;
+
+            // Enforce item requirement first (separate from lockpick)
+            if (requiresItem)
+            {
+                var inventory = InventoryManager.Instance;
+                bool hasItem = inventory != null && !string.IsNullOrEmpty(requiredItemName) && inventory.HasItem(requiredItemName);
+                if (!hasItem)
+                {
+                    DialogueManager dialogueManager = FindObjectOfType<DialogueManager>();
+                    if (dialogueManager != null)
+                    {
+                        string msg = string.IsNullOrEmpty(requiredItemName) ? "You can't enter yet." : $"You need {requiredItemName} to enter.";
+                        Dialogue needItemDialogue = new Dialogue {
+                            name = "",
+                            sentences = new string[] { msg },
+                            LockPlayerMovement = true
+                        };
+                        dialogueManager.StartDialogue(needItemDialogue);
+                    }
+                    else
+                    {
+                        Debug.Log($"Door requires item: {requiredItemName}");
+                    }
+                    return;
+                }
+                else if (consumeRequiredItem)
+                {
+                    inventory.RemoveItemByName(requiredItemName);
+                }
+            }
 
             if (isLocked)
             {
@@ -32,8 +77,10 @@ public class DoorTeleport : MonoBehaviour
                     if (lockpickGame != null)
                     {
                         // Subscribe to success event
-                        lockpickGame.OnLockpickSuccess += UnlockDoor;
-                        lockpickGame.StartGame();
+                        currentLockpickGame = lockpickGame;
+                        pendingPlayer = other.transform;
+                        currentLockpickGame.OnLockpickSuccess += UnlockDoor;
+                        currentLockpickGame.StartGame();
                     }
                     else
                     {
@@ -60,7 +107,8 @@ public class DoorTeleport : MonoBehaviour
                 return;
             }
 
-            StartCoroutine(TeleportPlayer(other.transform, 1.3f));
+            // Not locked, proceed immediately
+            StartCoroutine(TeleportOrLoad(other.transform));
         }
     }
 
@@ -69,7 +117,17 @@ public class DoorTeleport : MonoBehaviour
     {
         isLocked = false;
         Debug.Log("Door unlocked!");
-        // Optionally, you can teleport the player here or trigger other effects
+        // Unsubscribe to avoid duplicate calls
+        if (currentLockpickGame != null)
+        {
+            currentLockpickGame.OnLockpickSuccess -= UnlockDoor;
+        }
+        // Proceed with the pending action if we have a player reference
+        if (pendingPlayer != null)
+        {
+            StartCoroutine(TeleportOrLoad(pendingPlayer));
+            pendingPlayer = null;
+        }
     }
 
     // Helper to check for lockpick tool in inventory
@@ -81,25 +139,46 @@ public class DoorTeleport : MonoBehaviour
         return inventory.HasItem("Lockpick");
     }
 
-    IEnumerator TeleportPlayer(Transform player, float delayTime)
+    IEnumerator TeleportOrLoad(Transform player)
     {
         playerMovement = player.GetComponent<Movement>();
-        if (destination != null)
+        if (animator != null) animator.SetTrigger("FadeOut");
+        if (playerMovement != null) playerMovement.canMove = false;
+        yield return new WaitForSeconds(transitionDelay);
+
+        if (loadSceneInstead)
         {
-            animator.SetTrigger("FadeOut");
-            playerMovement.canMove = false;
-            yield return new WaitForSeconds(delayTime);
-            Debug.Log("Baaaaaaakaaaaaaaaaaaaaaaa");
-            Vector2 targetPosition = destination.position;
-            targetPosition.y += (verticalOffset);
-            targetPosition.x += (horizontalOffset);
+            if (!string.IsNullOrEmpty(sceneName))
+            {
+                SceneManager.LoadScene(sceneName);
+            }
+            else
+            {
+                Debug.LogWarning("Scene name not set on DoorTeleport.");
+                // If scene name is missing, re-enable movement to avoid soft lock
+                Invoke("EnablePlayerMovement", 0.4f);
+            }
+        }
+        else
+        {
+            if (destination != null)
+            {
+                Vector2 targetPosition = destination.position;
+                targetPosition.y += (verticalOffset);
+                targetPosition.x += (horizontalOffset);
 
-            player.position = targetPosition;
+                player.position = targetPosition;
 
-            yield return new WaitForSeconds(delayTime);
-            animator.SetTrigger("FadeIn");
-
-            Invoke("EnablePlayerMovement", 0.4f);
+                yield return new WaitForSeconds(transitionDelay);
+                if (animator != null) animator.SetTrigger("FadeIn");
+                Invoke("EnablePlayerMovement", 0.4f);
+            }
+            else
+            {
+                Debug.LogWarning("Destination not set on DoorTeleport.");
+                if (animator != null) animator.SetTrigger("FadeIn");
+                Invoke("EnablePlayerMovement", 0.4f);
+            }
         }
     }
     void EnablePlayerMovement()

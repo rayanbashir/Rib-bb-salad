@@ -10,6 +10,9 @@ public class DialogueManager : MonoBehaviour
 {
     private Dialogue currentDialogue;
     private NPCInt currentNPC; // Track which NPC started the dialogue
+    private string lastDialogueName; // Remember dialogue name even if cleared
+    private bool talkReported; // Ensure TalkToNPC runs once per dialogue
+    private bool isEndingDialogue; // Re-entrancy guard
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI dialogueText;
     public Movement playerMovement;
@@ -17,6 +20,10 @@ public class DialogueManager : MonoBehaviour
     public GameObject optionsPanel;
     public Button[] optionButtons;
     private bool showingOptions = false;
+
+    [Header("Optional: Text To Speech")]
+    [Tooltip("Provide a GoogleTextToSpeech component to synthesize each sentence.")]
+    [SerializeField] private GoogleTextToSpeech textToSpeech;
 
     private InputAction interactAction;
 
@@ -43,6 +50,15 @@ public class DialogueManager : MonoBehaviour
         Debug.Log(dialogue.sentences[0]);
         currentDialogue = dialogue;
         currentNPC = npc; // Track which NPC started this dialogue
+        // Reset per-dialogue flags and capture name early
+        talkReported = false;
+        isEndingDialogue = false;
+        lastDialogueName = dialogue != null ? dialogue.name : null;
+        if (currentNPC != null)
+        {
+            // Notify the NPC which dialogue just started (for stateful behaviors)
+            currentNPC.OnDialogueStarted(currentDialogue);
+        }
         Debug.Log(currentDialogue.sentences[0]);
         animator.SetBool("IsOpen", true);
         Debug.Log(sentences);
@@ -102,6 +118,12 @@ public class DialogueManager : MonoBehaviour
         string sentence = sentences.Dequeue();
         StopAllCoroutines();
         StartCoroutine(TypeSentence(sentence));
+
+        // Speak via TTS if available
+        if (textToSpeech != null)
+        {
+            textToSpeech.Speak(sentence);
+        }
     }
 
     IEnumerator TypeSentence (string sentence)
@@ -116,10 +138,53 @@ public class DialogueManager : MonoBehaviour
 
     public void EndDialogue()
     {
+        if (isEndingDialogue) {
+            // Prevent double handling if EndDialogue gets called twice quickly
+            return;
+        }
+        isEndingDialogue = true;
         Debug.Log("Sami is ended the dialuge");
 
+        // Stop any ongoing speech
+        if (textToSpeech != null)
+        {
+            textToSpeech.StopSpeaking();
+        }
 
-        playerProgress.TalkToNPC(currentDialogue.name);
+        // Capture ended dialogue safely
+        Dialogue endedDialogue = currentDialogue;
+        string endedDialogueName = endedDialogue != null ? endedDialogue.name : null;
+
+        // Determine best available name to report
+        string nameToReport = !string.IsNullOrEmpty(endedDialogueName)
+            ? endedDialogueName
+            : (!string.IsNullOrEmpty(lastDialogueName)
+                ? lastDialogueName
+                : (nameText != null && !string.IsNullOrEmpty(nameText.text)
+                    ? nameText.text
+                    : (currentNPC != null ? currentNPC.gameObject.name : null)));
+
+        // Lazy-assign PlayerProgress if missing
+        if (playerProgress == null)
+        {
+            playerProgress = FindObjectOfType<PlayerProgress>();
+        }
+
+        if (!talkReported)
+        {
+            if (playerProgress != null && !string.IsNullOrEmpty(nameToReport))
+            {
+                playerProgress.TalkToNPC(nameToReport);
+                talkReported = true;
+            }
+            else
+            {
+                if (playerProgress == null)
+                    Debug.LogWarning("PlayerProgress is not assigned and could not be found; skipping TalkToNPC.");
+                else
+                    Debug.LogWarning("Could not determine dialogue/NPC name to report; skipping TalkToNPC.");
+            }
+        }
         Debug.Log("End of conversation");
         animator.SetBool("IsOpen", false);
         optionsPanel.SetActive(false);
@@ -134,8 +199,18 @@ public class DialogueManager : MonoBehaviour
             StartCoroutine(Undialogue(npcToUndialogue));
         }
         
+        // Notify NPC and then clear the reference
+        if (npcToUndialogue != null)
+        {
+            npcToUndialogue.OnDialogueEnded(endedDialogue);
+        }
+
         // Clear the current NPC reference
         currentNPC = null;
+        currentDialogue = null;
+        lastDialogueName = null;
+        // Reset end guard for future dialogues
+        isEndingDialogue = false;
     }
 
 
