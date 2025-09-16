@@ -21,10 +21,6 @@ public class DialogueManager : MonoBehaviour
     public Button[] optionButtons;
     private bool showingOptions = false;
 
-    [Header("Optional: Text To Speech")]
-    [Tooltip("Provide a GoogleTextToSpeech component to synthesize each sentence.")]
-    [SerializeField] private GoogleTextToSpeech textToSpeech;
-
     private InputAction interactAction;
 
     public PlayerProgress playerProgress;
@@ -118,12 +114,6 @@ public class DialogueManager : MonoBehaviour
         string sentence = sentences.Dequeue();
         StopAllCoroutines();
         StartCoroutine(TypeSentence(sentence));
-
-        // Speak via TTS if available
-        if (textToSpeech != null)
-        {
-            textToSpeech.Speak(sentence);
-        }
     }
 
     IEnumerator TypeSentence (string sentence)
@@ -144,12 +134,6 @@ public class DialogueManager : MonoBehaviour
         }
         isEndingDialogue = true;
         Debug.Log("Sami is ended the dialuge");
-
-        // Stop any ongoing speech
-        if (textToSpeech != null)
-        {
-            textToSpeech.StopSpeaking();
-        }
 
         // Capture ended dialogue safely
         Dialogue endedDialogue = currentDialogue;
