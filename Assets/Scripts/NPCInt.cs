@@ -5,8 +5,15 @@ using TMPro;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
+using UnityEngine.Events;
+
 public class NPCInt : MonoBehaviour
 {
+    [Header("Post-Dialogue Event")] 
+    [Tooltip("If set, this event will trigger after dialogue ends, but only if the NPC's name matches triggerEventNpcName.")]
+    public UnityEvent onDialogueComplete;
+    [Tooltip("The NPC name that will trigger the post-dialogue event. Leave empty to disable.")]
+    public string triggerEventNpcName;
     public GameObject interactMark;
     public Animator animator;
     public DialogueManager dialogueManager;
@@ -200,21 +207,30 @@ public class NPCInt : MonoBehaviour
     // Called by DialogueManager when a dialogue ends for this NPC
     public void OnDialogueEnded(Dialogue endedDialogue)
     {
-        if (!givesItemAfterDialogue || hasGivenItem || string.IsNullOrEmpty(itemToGive))
-            return;
-
-        // If a specific dialogue is set, only give after that dialogue ends
-        if (!string.IsNullOrEmpty(itemRewardDialogueName))
+        // Item reward logic (unchanged)
+        if (givesItemAfterDialogue && !hasGivenItem && !string.IsNullOrEmpty(itemToGive))
         {
-            if (endedDialogue != null && endedDialogue.name == itemRewardDialogueName)
+            if (!string.IsNullOrEmpty(itemRewardDialogueName))
+            {
+                if (endedDialogue != null && endedDialogue.name == itemRewardDialogueName)
+                {
+                    GiveItemToPlayer();
+                }
+            }
+            else
             {
                 GiveItemToPlayer();
             }
         }
-        else
+
+        // Post-dialogue event logic
+        if (!string.IsNullOrEmpty(triggerEventNpcName) && gameObject.name == triggerEventNpcName)
         {
-            // Backward-compat: if no specific dialogue set, give after the next dialogue that ends
-            GiveItemToPlayer();
+            if (onDialogueComplete != null)
+            {
+                onDialogueComplete.Invoke();
+                Debug.Log($"Post-dialogue event triggered for NPC: {gameObject.name}");
+            }
         }
     }
 }

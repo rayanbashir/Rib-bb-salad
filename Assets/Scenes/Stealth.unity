@@ -13548,6 +13548,9 @@ MonoBehaviour:
   - {fileID: 101162230}
   - {fileID: 1647480417}
   playerProgress: {fileID: 1825269011}
+  speakerAudioSource: {fileID: 0}
+  elevenLabsApiKey: YOUR_ELEVENLABS_API_KEY
+  elevenLabsVoiceId: YOUR_VOICE_ID
 --- !u!4 &729401558
 Transform:
   m_ObjectHideFlags: 0
@@ -21196,7 +21199,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1550195930
 MonoBehaviour:
   m_ObjectHideFlags: 0
