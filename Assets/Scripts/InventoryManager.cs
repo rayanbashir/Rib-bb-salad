@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance { get; private set; }
+    private static Canvas persistentInventoryCanvas; // Dedicated persistent canvas for Inventory UI only
 
     [Header("Inventory UI References")]
     [SerializeField] private GameObject inventoryUI;
@@ -36,10 +37,49 @@ public class InventoryManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            // Re-parent inventory UI under a dedicated persistent canvas so the original scene canvas doesn't persist
+            AttachInventoryUIToPersistentCanvas();
+            // Persist only the Inventory UI object (not the original scene canvas hierarchy)
+            if (inventoryUI != null)
+                DontDestroyOnLoad(inventoryUI);
         }
         else
         {
+            // A persistent InventoryManager already exists.
+            // If this duplicate has its own inventory UI, destroy it to avoid duplicates.
+            if (inventoryUI != null)
+                Destroy(inventoryUI);
             Destroy(gameObject);
+        }
+    }
+
+    private void AttachInventoryUIToPersistentCanvas()
+    {
+        if (inventoryUI == null) return;
+
+        // Create or reuse a dedicated persistent canvas so we don't persist the scene's canvas
+        if (persistentInventoryCanvas == null)
+        {
+            var existing = GameObject.Find("InventoryUI_PersistentCanvas");
+            if (existing != null)
+            {
+                persistentInventoryCanvas = existing.GetComponent<Canvas>();
+            }
+            if (persistentInventoryCanvas == null)
+            {
+                var go = new GameObject("InventoryUI_PersistentCanvas");
+                persistentInventoryCanvas = go.AddComponent<Canvas>();
+                persistentInventoryCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
+                go.AddComponent<UnityEngine.UI.CanvasScaler>();
+                go.AddComponent<UnityEngine.UI.GraphicRaycaster>();
+                DontDestroyOnLoad(go);
+            }
+        }
+
+        // Reparent inventory UI under the persistent canvas (preserve layout)
+        if (inventoryUI.transform.parent != persistentInventoryCanvas.transform)
+        {
+            inventoryUI.transform.SetParent(persistentInventoryCanvas.transform, false);
         }
     }
 
