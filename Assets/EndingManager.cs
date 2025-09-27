@@ -22,6 +22,14 @@ public class EndingManager : MonoBehaviour
 
     private Coroutine _currentRoutine;
 
+    /// <summary>
+    /// Loads the Main Menu scene immediately.
+    /// </summary>
+    public void LoadMainMenu()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Main Menu");
+    }
+
     /// <summary>Play Bad Ending sequence.</summary>
     public void PlayBadEnding() => StartEnding(badEndingUI);
     /// <summary>Play Good Ending sequence.</summary>
