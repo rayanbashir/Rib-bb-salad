@@ -346,6 +346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac14963b82bd6c44c8f10c28659cd584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movementCancelThreshold: 0.2
   joystick: {fileID: 750600818}
   panel: {fileID: 1400923986}
   pointer: {fileID: 1962696904}
@@ -663,30 +664,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   requiresItem: 0
   requiredItemName: 
+  consumeRequiredItem: 0
   isSingleUse: 1
-  interactionPrompt: {fileID: 459137138}
-  defaultPromptMessage: Press E to pick lock
-  itemPromptMessage: Press E to use {0}
   dialogueSettings:
     hasDialogue: 0
     beforeItemDialogue:
       name: 
-      showBusts: 0
-      leftBust: {fileID: 0}
-      rightBust: {fileID: 0}
       sentences: []
       LockPlayerMovement: 0
       options: []
-      hasOptions: 0
     afterItemDialogue:
       name: 
-      showBusts: 0
-      leftBust: {fileID: 0}
-      rightBust: {fileID: 0}
       sentences: []
       LockPlayerMovement: 0
       options: []
-      hasOptions: 0
   reinteractDelay: 0.5
   onInteractionTriggered:
     m_PersistentCalls:
@@ -2126,16 +2117,11 @@ MonoBehaviour:
   playerMovement: {fileID: 947469790}
   animator: {fileID: 939620486}
   optionsPanel: {fileID: 2053548526}
-  joystick: {fileID: 750600818}
   optionButtons:
   - {fileID: 1837702504}
   - {fileID: 101162230}
   - {fileID: 1647480417}
   playerProgress: {fileID: 0}
-  bustsContainer: {fileID: 1112742747}
-  leftBustImage: {fileID: 1650841694}
-  rightBustImage: {fileID: 231017350}
-  bustFadeSpeed: 5
 --- !u!4 &729401558
 Transform:
   m_ObjectHideFlags: 0
@@ -2410,10 +2396,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -2499,9 +2485,6 @@ MonoBehaviour:
   dialogueManager: {fileID: 729401557}
   startingDialogue:
     name: voice in the sky
-    showBusts: 0
-    leftBust: {fileID: 0}
-    rightBust: {fileID: 0}
     sentences:
     - helo and welcome to this game
     - wasd or arrow keys to mvoe
@@ -2510,7 +2493,6 @@ MonoBehaviour:
     - innit
     LockPlayerMovement: 1
     options: []
-    hasOptions: 0
 --- !u!4 &766430545
 Transform:
   m_ObjectHideFlags: 0
@@ -9225,32 +9207,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   requiresItem: 1
   requiredItemName: lighter
+  consumeRequiredItem: 0
   isSingleUse: 1
-  interactionPrompt: {fileID: 459137138}
-  defaultPromptMessage: press e to interact
-  itemPromptMessage: press e to commit arson
   dialogueSettings:
     hasDialogue: 1
     beforeItemDialogue:
       name: 
-      showBusts: 0
-      leftBust: {fileID: 0}
-      rightBust: {fileID: 0}
       sentences:
       - just a wooden shack
       LockPlayerMovement: 1
       options: []
-      hasOptions: 0
     afterItemDialogue:
       name: 
-      showBusts: 0
-      leftBust: {fileID: 0}
-      rightBust: {fileID: 0}
       sentences:
       - are you proud of yourself
       LockPlayerMovement: 1
       options: []
-      hasOptions: 0
   reinteractDelay: 0.5
   onInteractionTriggered:
     m_PersistentCalls:
@@ -10005,10 +9977,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -11966,8 +11938,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryUI: {fileID: 1389416733}
-  itemContainer: {fileID: 6529703}
-  itemPrefab: {fileID: 8102727837116499431, guid: dc8e74ef16781704188a9cba84d95d92, type: 3}
+  content: {fileID: 0}
+  iconPrefab: {fileID: 0}
+  itemPanel: {fileID: 0}
+  itemImage: {fileID: 0}
+  itemNameText: {fileID: 0}
+  itemDescriptionText: {fileID: 0}
+  itemSourceText: {fileID: 0}
   playerProgress: {fileID: 0}
 --- !u!4 &1550195931
 Transform:

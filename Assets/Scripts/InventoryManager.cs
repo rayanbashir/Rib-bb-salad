@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
+using JetBrains.Annotations;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -70,7 +71,9 @@ public class InventoryManager : MonoBehaviour
                 var go = new GameObject("InventoryUI_PersistentCanvas");
                 persistentInventoryCanvas = go.AddComponent<Canvas>();
                 persistentInventoryCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
-                go.AddComponent<UnityEngine.UI.CanvasScaler>();
+                var goscaler = go.AddComponent<UnityEngine.UI.CanvasScaler>();
+                goscaler.uiScaleMode = UnityEngine.UI.CanvasScaler.ScaleMode.ScaleWithScreenSize;
+                goscaler.referenceResolution = new Vector2(1920, 1080);
                 go.AddComponent<UnityEngine.UI.GraphicRaycaster>();
                 DontDestroyOnLoad(go);
             }
