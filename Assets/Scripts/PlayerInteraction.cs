@@ -8,7 +8,6 @@ public class PlayerInteraction : MonoBehaviour
     private InputAction movementAction;
     private InputAction inventoryAction;
 
-    private bool isInteractingWithInventory = false;
 
     public bool TouchingJoystick = false;
 

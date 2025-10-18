@@ -89,15 +89,6 @@ public class DialogueManager : MonoBehaviour
     {
         if (sentences.Count == 0)
         {
-            // if (showingOptions)
-            // {
-            //     ShowOptions();
-            // }
-            // else
-            // {
-            //     EndDialogue();
-            // }
-            // return;
             if (showingOptions)
             {
                 ShowOptions();

@@ -1,15 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-/// <summary>
-/// Triggers a UnityEvent when the Player collides with this GameObject (non-trigger collider).
-/// Works with both 2D and 3D physics. Add listeners to <see cref="onPlayerCollision"/> in the Inspector.
-/// </summary>
-/// <remarks>
-/// Requirements:
-/// - This object must have a Collider2D (for 2D) or Collider (for 3D) that is NOT marked as "Is Trigger".
-/// - The Player must have a Rigidbody2D (or Rigidbody for 3D) and a Collider.
-/// </remarks>
 public class FinalDoorScript : MonoBehaviour
 {
     [Header("Collision Event")]
